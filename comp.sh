@@ -2,6 +2,6 @@ cd Parser
 jjtree Parser.jjt
 javacc Parser.jj
 cd ..
-javac -cp .:gson-2.8.0.jar Main/*.java Parser/*.java -d out
+javac -cp .:gson-2.8.0.jar com/*.java Objects/*.java Main/*.java Parser/*.java -d out
 cd out
-java  Parser
+java  -jar ../gson-2.8.0.jar Parser

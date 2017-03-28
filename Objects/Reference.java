@@ -1,3 +1,3 @@
-public Reference extends Node {
+public abstract class Reference extends BasicNode {
 	private String name;
 }
