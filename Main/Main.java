@@ -3,7 +3,7 @@ import Objects.*;
 
 public class Main {
     private String type;
-    private ArrayList<BasicNode> body;
+    private ArrayList<Object> body;
 
     public Main(){
 
@@ -11,5 +11,6 @@ public class Main {
 
     public void print(){
         System.out.println("type: " + type);
+        System.out.println("body: " + body.size());
     };
 }
