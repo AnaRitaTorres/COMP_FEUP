@@ -37,7 +37,7 @@ public class Parser{
         FileInputStream fis = null;
 
         Gson gson = new GsonBuilder()
-                            .registerTypeAdapter(Node.class, new NodeDeserializer())
+                            .registerTypeAdapter(BasicNode.class, new NodeDeserializer())
                             .registerTypeAdapter(Reference.class, new NodeDeserializer())
                             .registerTypeAdapter(Expression.class, new NodeDeserializer())
                             .create();

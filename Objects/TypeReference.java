@@ -1,3 +1,4 @@
+package Objects;
 public abstract class TypeReference extends Reference {
     //usem esta anotação quando a propriedade no JSON é uma palavra reservada. aqui para não dar erro no Java digo que a minha variável
     // @SerializedName("_package")

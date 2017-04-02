@@ -2,7 +2,7 @@
     "type": "Program",
     "body": [
         {
-            "type": "VariableDeclaration",
+            "nodetype": "BinaryExpression",
             "declarations": [
                 {
                     "type": "VariableDeclarator",

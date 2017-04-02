@@ -1,3 +1,4 @@
 /out/
-/Parser/
-!Parser/Parser.jjt
+Parser/*.java
+Parser/*.jj
+!/Parser/Parser.jjt

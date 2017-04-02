@@ -1,3 +1,4 @@
+package Objects;
 public enum MyClass {
     // You Only need the concrete classes, NOT the abstract ones
     // TYPEREFERENCE(TypeReference.class),
