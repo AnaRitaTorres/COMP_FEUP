@@ -1,6 +1,6 @@
-enum MyClass {
+public enum MyClass {
     // You Only need the concrete classes, NOT the abstract ones
-    TYPEREFERENCE(TypeReference.class),
+    // TYPEREFERENCE(TypeReference.class),
     // LOCALVARIABLEREFERENCE(LocalVariableReference.class),   //TODO nao ta feito
     BINARYEXPRESSION(BinaryExpression.class),
     LITERAL(Literal.class);

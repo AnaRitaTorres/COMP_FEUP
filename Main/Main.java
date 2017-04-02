@@ -1,9 +1,9 @@
 import java.util.*;
-
+import Objects.*;
 
 public class Main {
     private String type;
-    private ArrayList<Object> body;
+    private ArrayList<BasicNode> body;
 
     public Main(){
 

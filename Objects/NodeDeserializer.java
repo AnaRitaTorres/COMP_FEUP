@@ -1,9 +1,14 @@
 import com.google.gson.*;
+import com.google.gson.stream.*;
+import Objects.*;
+import java.lang.reflect.Type;
 
 
-public abstract class NodeDeserializer implements JsonDeserializer<BasicNode> {
+public class NodeDeserializer implements JsonDeserializer<Class<? extends BasicNode>> {
 
-    public BasicNode deserialize(JsonElement jsonElement, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+
+    @Override
+    public Class<? extends BasicNode> deserialize(JsonElement jsonElement, Type type,  JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         try {
             JsonObject jsonObj = jsonElement.getAsJsonObject();  //vao buscar o objeto atual como um JsonObject para poderem ir buscar a propriedade que querem
             JsonElement nodeTypeEl = jsonObj.get("nodetype");      // get the type of the node so we can use the correct class
@@ -12,14 +17,15 @@ public abstract class NodeDeserializer implements JsonDeserializer<BasicNode> {
             }
 
             String nodeType = nodeTypeEl.getAsString(); //simply casting the object as string
-            Class<? extends BasicNode> classToUse = getClassToUse(nodeType); //somehow get the Class to use based on the node type given
+            System.out.println(nodeType);
+            Class classToUse = getClassToUse(nodeType); //somehow get the Class to use based on the node type given
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic desearialization.
         } catch (Exception e) {
             throw new JsonParseException(e);
         }
     }
 
-    private Class<? extends BasicNode> getClassToUse(String nodeType) {
+    private Class getClassToUse(String nodeType) {
         return MyClass.valueOf(nodeType.toUpperCase()).myClass; // we use an enum to map a node type to a specific class
     }
 }
