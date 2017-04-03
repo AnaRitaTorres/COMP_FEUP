@@ -1,7 +1,5 @@
 package Nodes;
 
-import java.util.*;
-
 public abstract class BasicNode{
 	private String type;
 
