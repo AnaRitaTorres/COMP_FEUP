@@ -1,7 +1,7 @@
 package Parser;
 
 import java.io.*;
-
+import Esprima.rhino.Esprima;
 import Nodes.BasicNode;
 import Nodes.Expression;
 import Nodes.Reference;
@@ -9,21 +9,35 @@ import com.google.gson.*;
 import com.google.gson.stream.*;
 import Objects.*;
 
+import javax.script.ScriptException;
+
 public class Parser {
 
     public static void main(String[] args) throws JsonParseException {
 
-        String esprima = readEsprima();
+        if(args.length != 1){
+            System.out.println("java Parser <jsFile>.");
+            return;
+        }
+
+        String jsonPath=null;
+
+        try {
+            jsonPath=Esprima.readJS2JSON(args[0]);
+        } catch (ScriptException | IOException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+        //String esprima = readEsprima();
 
         //System.out.print(esprima);
 
-//        InputStream esprimaStream = new ByteArrayInputStream(esprima.getBytes());
-
-//        try {
-//            esprimaStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        //InputStream esprimaStream = new ByteArrayInputStream(esprima.getBytes());
+        //try {
+        // esprimaStream.close();
+        // } catch (IOException e) {
+        // e.printStackTrace();
+        // }
     }
 
     public static String readEsprima() {
