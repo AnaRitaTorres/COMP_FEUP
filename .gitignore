@@ -1,2 +1,4 @@
 /out
-/.idea
+.idea
+!resources/JSFiles/test.js
+/resources/JSONFiles

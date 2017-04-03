@@ -9,7 +9,12 @@ import java.util.ArrayList;
  */
 public class VariableDeclarator extends Expression {
 
-    private ArrayList<Expression> id;
+    private Id id;
 
     public VariableDeclarator(){};
+
+    public void print(){
+        System.out.println("id: " + id);
+        id.print();
+    }
 }

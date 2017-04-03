@@ -13,4 +13,8 @@ public class VariableDeclaration extends Expression {
     private ArrayList<Expression> declarations;
 
     public VariableDeclaration(){};
+
+    public void print(){
+        declarations.get(0).print();
+    }
 }

@@ -15,5 +15,6 @@ public class Root {
     public void print(){
         System.out.println("type: " + type);
         System.out.println("body: " + body);
+        body.get(0).print();
     };
 }

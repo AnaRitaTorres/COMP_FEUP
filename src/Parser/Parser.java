@@ -20,15 +20,14 @@ public class Parser {
             return;
         }
 
-        String jsonPath=null;
-
         try {
-            jsonPath=Esprima.readJS2JSON(args[0]);
+            String jsonPath=Esprima.readJS2JSON(args[0]);
+            String esprima = readEsprima(jsonPath);
+
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
-        //String esprima = readEsprima();
 
         //System.out.print(esprima);
 
@@ -40,7 +39,7 @@ public class Parser {
         // }
     }
 
-    public static String readEsprima() {
+    public static String readEsprima(String json) {
 
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(BasicNode.class, new NodeDeserializer())
@@ -49,7 +48,7 @@ public class Parser {
                 .create();
         JsonReader reader;
         try {
-            reader = new JsonReader(new FileReader("esprima.json"));
+            reader = new JsonReader(new FileReader(json));
             Root init = gson.fromJson(reader, Root.class);
             init.print();
         } catch (FileNotFoundException err) {

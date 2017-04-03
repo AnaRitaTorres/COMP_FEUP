@@ -5,12 +5,12 @@ import Nodes.TypeReference;
 
 public enum MyClass {
     // You Only need the concrete classes, NOT the abstract ones
-    TYPE_REFERENCE(TypeReference.class),
-    VARIABLE_DECLARATION(VariableDeclaration.class),
-    BINARY_EXPRESSION(BinaryExpression.class),
+    TYPEREFERENCE(TypeReference.class),
+    VARIABLEDECLARATION(VariableDeclaration.class),
+    BINARYEXPRESSION(BinaryExpression.class),
     LITERAL(Literal.class),
-    VARIABLE_DECLARATOR(VariableDeclarator.class),
-    IDENTIFIER(Identifier.class);
+    VARIABLEDECLARATOR(VariableDeclarator.class),
+    ID(Id.class);
 
     public Class<?> myClass;
 
