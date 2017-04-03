@@ -1,15 +1,16 @@
 package Objects;
 
 import Nodes.BasicNode;
+import Nodes.TypeReference;
 
 public enum MyClass {
     // You Only need the concrete classes, NOT the abstract ones
-    // TYPEREFERENCE(TypeReference.class),
-    // LOCALVARIABLEREFERENCE(LocalVariableReference.class),   //TODO nao ta feito
-    BINARYEXPRESSION(BinaryExpression.class),
-    LITERAL(Literal.class);
-    // VARIABLEREAD(VariableRead.class);   //TODO nao ta feito
-    // // Define the remaining BasicNodetype and corresponding classes
+    TYPE_REFERENCE(TypeReference.class),
+    VARIABLE_DECLARATION(VariableDeclaration.class),
+    BINARY_EXPRESSION(BinaryExpression.class),
+    LITERAL(Literal.class),
+    VARIABLE_DECLARATOR(VariableDeclarator.class),
+    IDENTIFIER(Identifier.class);
 
     public Class<?> myClass;
 
