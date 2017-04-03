@@ -17,10 +17,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             }
 
             String nodeType = nodeTypeEl.getAsString(); //simply casting the object as string
-            System.out.println(nodeType);
-
             Class<? extends BasicNode> classToUse = getClassToUse(nodeType); //somehow get the Class to use based on the node type given
-            System.out.println(classToUse);
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic desearialization.
         } catch (Exception e) {
             throw new JsonParseException(e);

@@ -10,11 +10,14 @@ public class Root {
 
     public Root(){
 
-    };
+    }
 
     public void print(){
         System.out.println("type: " + type);
         System.out.println("body: " + body);
-        body.get(0).print();
-    };
+
+        for (int i = 0; i < body.size(); i++) {
+            body.get(i).print();
+        }
+    }
 }

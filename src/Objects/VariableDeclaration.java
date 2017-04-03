@@ -15,6 +15,8 @@ public class VariableDeclaration extends Expression {
     public VariableDeclaration(){};
 
     public void print(){
-        declarations.get(0).print();
+        for (int i = 0; i < declarations.size(); i++) {
+            declarations.get(i).print();
+        }
     }
 }
