@@ -52,7 +52,7 @@ public class Parser {
             Root init = gson.fromJson(reader, Root.class);
             init.print();
         } catch (FileNotFoundException err) {
-
+            System.err.println(err);
         }
         return "nope";
     }
