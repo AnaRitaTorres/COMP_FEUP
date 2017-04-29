@@ -10,6 +10,7 @@ public enum MyClass {
     BINARYEXPRESSION(BinaryExpression.class),
     LITERAL(Literal.class),
     VARIABLEDECLARATOR(VariableDeclarator.class),
+    ARRAYEXPRESSION(ArrayExpression.class),
     ID(Id.class);
 
     public Class<?> myClass;
