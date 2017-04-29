@@ -15,6 +15,8 @@ public enum MyClass {
     BLOCKSTATEMENT(BlockStatement.class),
     EXPRESSIONSTATEMENT(ExpressionStatement.class),
     IFSTATEMENT(IfStatement.class),
+    FORSTATEMENT(ForStatement.class),
+    ASSIGNMENTEXPRESSION(AssignmentExpression.class),
     ARRAYEXPRESSION(ArrayExpression.class);
 
     public Class<?> myClass;

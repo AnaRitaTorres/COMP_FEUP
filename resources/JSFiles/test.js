@@ -5,3 +5,5 @@ var tuna = 125+3;
 var bear = "hello" + " world";
 var lynx = "my number is " + 4;
 var puma = (3 + 3)*4;
+var frog = [1,2,3,"bmw"];
+var fish = "babe";
