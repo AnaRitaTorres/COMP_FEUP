@@ -14,7 +14,8 @@ public enum MyClass {
     IDENTIFIER(Identifier.class),
     BLOCKSTATEMENT(BlockStatement.class),
     EXPRESSIONSTATEMENT(ExpressionStatement.class),
-    IFSTATEMENT(IfStatement.class);
+    IFSTATEMENT(IfStatement.class),
+    ARRAYEXPRESSION(ArrayExpression.class);
 
     public Class<?> myClass;
 
