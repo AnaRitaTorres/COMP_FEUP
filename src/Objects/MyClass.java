@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.BasicNode;
+import Nodes.Expression;
 import Nodes.TypeReference;
 
 public enum MyClass {
@@ -10,7 +11,10 @@ public enum MyClass {
     BINARYEXPRESSION(BinaryExpression.class),
     LITERAL(Literal.class),
     VARIABLEDECLARATOR(VariableDeclarator.class),
-    ID(Id.class);
+    IDENTIFIER(Identifier.class),
+    BLOCKSTATEMENT(BlockStatement.class),
+    EXPRESSIONSTATEMENT(ExpressionStatement.class),
+    IFSTATEMENT(IfStatement.class);
 
     public Class<?> myClass;
 

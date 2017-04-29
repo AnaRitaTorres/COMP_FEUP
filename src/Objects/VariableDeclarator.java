@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class VariableDeclarator extends Expression {
 
-    private Id id;
+    private Identifier id;
     private Expression init;
 
     public VariableDeclarator(){};
