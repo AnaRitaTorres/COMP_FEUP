@@ -20,4 +20,13 @@ public class Root {
             body.get(i).print();
         }
     }
+
+    public String toString(){
+        String code = "public void main(String[] args){\n\n";
+        for (BasicNode node:body) {
+            code += body.toString();
+        }
+        code += "\n}";
+        return code;
+    }
 }

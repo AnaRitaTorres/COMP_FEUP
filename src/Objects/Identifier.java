@@ -9,4 +9,8 @@ public class Identifier extends Expression {
     public void print(){
         System.out.println("name: " + name);
     }
+
+    public String toString(){
+        return name;
+    }
 }

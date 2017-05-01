@@ -1,5 +1,7 @@
 package Parser;
 import Nodes.BasicNode;
+import Objects.AssignmentExpression;
+import Objects.Identifier;
 import Objects.MyClass;
 import com.google.gson.*;
 
@@ -17,7 +19,36 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             }
 
             String nodeType = nodeTypeEl.getAsString(); //simply casting the object as string
+
             Class<? extends BasicNode> classToUse = getClassToUse(nodeType); //somehow get the Class to use based on the node type given
+            if(Parser.varToAnalyze != null){
+                String varType = "";
+                switch(nodeType){
+                    case "Literal":
+                        JsonElement value = jsonObj.get("value");
+                        try {
+                            value.getAsInt();
+                            if(value.getAsString().contains("."))
+                                varType = "long";
+                            else varType = "int";
+                        }catch(Exception err){
+                            varType = "String";
+                        }
+                        break;
+                }
+                Parser.variables.put(Parser.varToAnalyze, varType);
+                Parser.varToAnalyze = null;
+                Parser.infer = false;
+            }
+
+            if(classToUse.equals(AssignmentExpression.class)){
+                Parser.infer = true;
+            }
+            if(classToUse.equals(Identifier.class) && Parser.infer){
+                Parser.varToAnalyze = jsonObj.get("name").getAsString();
+            }
+
+
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic desearialization.
         } catch (Exception e) {
             throw new JsonParseException(e);

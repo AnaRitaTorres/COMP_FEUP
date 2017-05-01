@@ -19,6 +19,13 @@ public class BinaryExpression extends Expression {
         System.out.println(getValue());
     }
 
+    @Override
+    public String toString(){
+        String code;
+        code = left + " " + operator + " " + right;
+        return code;
+    }
+
     public Object getValue(){
         Object ret = null, r, l;
         if(right instanceof BinaryExpression){

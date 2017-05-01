@@ -1,6 +1,9 @@
 package Parser;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import Esprima.rhino.Esprima;
 import Nodes.BasicNode;
 import Nodes.Expression;
@@ -12,6 +15,10 @@ import Objects.*;
 import javax.script.ScriptException;
 
 public class Parser {
+
+    public static HashMap<String, String> variables = new HashMap<>();
+    public static String varToAnalyze;
+    public static boolean infer = false;
 
     public static void main(String[] args) throws JsonParseException {
 
@@ -28,7 +35,10 @@ public class Parser {
             e.printStackTrace();
         }
 
-
+        for (String string :
+                variables.keySet()) {
+            System.out.println(string);
+        }
         //System.out.print(esprima);
 
         //InputStream esprimaStream = new ByteArrayInputStream(esprima.getBytes());
@@ -50,7 +60,7 @@ public class Parser {
         try {
             reader = new JsonReader(new FileReader(json));
             Root init = gson.fromJson(reader, Root.class);
-            init.print();
+            //init.print();
         } catch (FileNotFoundException err) {
             System.err.println(err);
         }
