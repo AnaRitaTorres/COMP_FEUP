@@ -17,3 +17,15 @@ public class UpdateExpression {
     }
 
  }
+
+
+ /*
+ *
+ * {
+ *  "a": {type="int" isFunction=false},
+ *  "print: {type="void", isFunction=true, args: {}, vars:{}}
+ * }
+ *
+ *
+ * var a = new A;
+ * */
