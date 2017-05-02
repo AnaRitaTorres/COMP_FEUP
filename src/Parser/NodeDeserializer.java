@@ -42,11 +42,13 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             }
 
             if(classToUse.equals(AssignmentExpression.class)){
-                Parser.infer = true;
+                if(classToUse.equals(Identifier.class) && Parser.infer){
+                    JsonObject id = jsonObj.get("left").getAsJsonObject();
+                    //if id type = identifier
+                    //then add vartype to jsonObj value: 
+                }
             }
-            if(classToUse.equals(Identifier.class) && Parser.infer){
-                Parser.varToAnalyze = jsonObj.get("name").getAsString();
-            }
+
 
 
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic desearialization.
