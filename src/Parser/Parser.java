@@ -30,16 +30,15 @@ public class Parser {
         try {
             String jsonPath=Esprima.readJS2JSON(args[0]);
             String esprima = readEsprima(jsonPath);
+            //  System.out.print(esprima);
 
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
-        for (String string :
-                variables.keySet()) {
+        for (String string : variables.keySet()) {
             System.out.println(string);
         }
-        //System.out.print(esprima);
 
         //InputStream esprimaStream = new ByteArrayInputStream(esprima.getBytes());
         //try {
@@ -60,7 +59,7 @@ public class Parser {
         try {
             reader = new JsonReader(new FileReader(json));
             Root init = gson.fromJson(reader, Root.class);
-            //init.print();
+            init.print();
         } catch (FileNotFoundException err) {
             System.err.println(err);
         }

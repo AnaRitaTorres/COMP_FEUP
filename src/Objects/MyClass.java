@@ -17,7 +17,8 @@ public enum MyClass {
     IFSTATEMENT(IfStatement.class),
     FORSTATEMENT(ForStatement.class),
     ASSIGNMENTEXPRESSION(AssignmentExpression.class),
-    ARRAYEXPRESSION(ArrayExpression.class);
+    ARRAYEXPRESSION(ArrayExpression.class),
+    WHILESTATEMENT(WhileStatement.class);
 
     public Class<?> myClass;
 

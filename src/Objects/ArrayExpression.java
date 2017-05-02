@@ -5,9 +5,6 @@ import Nodes.Expression;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-/**
- * Created by rita on 29-04-2017.
- */
 public class ArrayExpression extends Expression {
 
     public ArrayExpression(){};

@@ -5,18 +5,17 @@ import java.lang.reflect.Type;
 
 public class BinaryExpression extends Expression {
     //aqui não estendi de BasicNode para esta classe poder ser usada como expression
-    public BinaryExpression(){};
-    public BinaryExpression createInstance(Type type){return new BinaryExpression();};
-
-	private String operator;
+    private String operator;
     private Expression left;
     private Expression right;
 
+    public BinaryExpression(){};
+    public BinaryExpression createInstance(Type type){return new BinaryExpression();};
 
     public void print() {
-        System.out.println("operator: " + operator);
-
-        System.out.println(getValue());
+        System.out.print(left+operator+right);
+        /*System.out.println("operator: " + operator);
+        System.out.println(getValue());*/
     }
 
     @Override
@@ -60,6 +59,16 @@ public class BinaryExpression extends Expression {
                     ret = ((Double)l + (Double)r);
                 } else if(l instanceof String || r instanceof String){
                     ret = String.valueOf(l) + String.valueOf(r);
+                }
+                break;
+            case "<":
+                if(l instanceof Double && r instanceof Double){
+                    ret=((Double)l<(Double)r);
+                }
+                break;
+            case ">":
+                if(l instanceof Double && r instanceof Double){
+                    ret=((Double)l<(Double)r);
                 }
                 break;
         }

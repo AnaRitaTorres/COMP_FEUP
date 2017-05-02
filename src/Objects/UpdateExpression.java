@@ -2,9 +2,6 @@ package Objects;
 
 import Nodes.Expression;
 
-/**
- * Created by rita on 29-04-2017.
- */
 public class UpdateExpression {
 
     private String operator;

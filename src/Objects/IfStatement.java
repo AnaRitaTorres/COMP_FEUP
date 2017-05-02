@@ -8,12 +8,14 @@ public class IfStatement extends Expression {
     private Expression alternate;
 
     public void print(){
-        System.out.println("if(");
+        System.out.print("if(");
         test.print();
-        if(consequent.getClass().equals(BlockStatement.class))
+        if(consequent.getClass().equals(BlockStatement.class)){
             System.out.println("){");
+            consequent.print();
+        }
         else{
-            System.out.println(")");
+            System.out.print("}");
         }
 
     }
