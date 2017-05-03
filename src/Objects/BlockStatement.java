@@ -11,6 +11,11 @@ public class BlockStatement extends Expression {
         for(int i=0;i<body.size();i++){
             body.get(i).print();
         }
-        System.out.println("\n}");
+        if(body.size()==0){
+            System.out.println("\n}");
+        }
+        else{
+            System.out.println("}");
+        }
     }
 }

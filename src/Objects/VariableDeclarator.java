@@ -13,6 +13,7 @@ public class VariableDeclarator extends Expression {
 
     public void print(){
         id.print();
+        System.out.print("=");
         init.print();
     }
 }

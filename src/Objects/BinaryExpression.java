@@ -4,18 +4,18 @@ import Nodes.Expression;
 import java.lang.reflect.Type;
 
 public class BinaryExpression extends Expression {
-    //aqui não estendi de BasicNode para esta classe poder ser usada como expression
+
     private String operator;
     private Expression left;
     private Expression right;
 
-    public BinaryExpression(){};
-    public BinaryExpression createInstance(Type type){return new BinaryExpression();};
+    public BinaryExpression(){}
+    public BinaryExpression createInstance(Type type){return new BinaryExpression();}
 
     public void print() {
-        System.out.print(left+operator+right);
-        /*System.out.println("operator: " + operator);
-        System.out.println(getValue());*/
+        left.print();
+        System.out.print(operator);
+        right.print();
     }
 
     @Override

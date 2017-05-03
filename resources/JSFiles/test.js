@@ -7,10 +7,18 @@ var lynx = "my number is " + 4;
 var puma = (3 + 3)*4;
 var frog = [1,2,3,4];
 var fish = "babe";
-if(bull<goat){
+var b=new user(1,2,3);
 
+if(bull<goat){
+var ola="ola"+"ola";
 }
 
 while(bull<goat){
-bull=1;
+bull=1; //temos de verificar se a variável foi declarada antes
+}
+
+while(bull<goat){ //é preciso tratar depois dos espaços para ficar o código alinhado no ficheiro java
+    if(bull<goat){
+        var ola="ola"+"ola";
+    }
 }

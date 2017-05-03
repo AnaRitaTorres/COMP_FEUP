@@ -13,7 +13,7 @@ public  class Literal extends Expression {
 	};
 
 	public void print(){
-		System.out.println("value: " + value.getClass().getName());
+		System.out.print(raw);
 	}
 
 }

@@ -18,7 +18,8 @@ public enum MyClass {
     FORSTATEMENT(ForStatement.class),
     ASSIGNMENTEXPRESSION(AssignmentExpression.class),
     ARRAYEXPRESSION(ArrayExpression.class),
-    WHILESTATEMENT(WhileStatement.class);
+    WHILESTATEMENT(WhileStatement.class),
+    NEWEXPRESSION(NewExpression.class);
 
     public Class<?> myClass;
 

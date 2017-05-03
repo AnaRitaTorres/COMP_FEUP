@@ -4,13 +4,13 @@ package Objects;
 import Nodes.Expression;
 
 public class Identifier extends Expression {
-    String name;
+    private String name;
 
     public void print(){
-        System.out.println("name: " + name);
+        System.out.print(name);
     }
 
-    public String toString(){
+    public String getName(){
         return name;
     }
 }
