@@ -2,15 +2,23 @@ package Objects;
 
 import Nodes.Expression;
 
-public class UpdateExpression {
+public class UpdateExpression extends Expression{
 
     private String operator;
-    private Literal argument;
+    private Identifier argument;
+    private Boolean prefix;
 
     public void print() {
-        System.out.println("operator: " + operator);
-
-
+        if(prefix){
+            System.out.print(operator);
+            argument.print();
+        }
+        else
+        {
+            argument.print();
+            System.out.print(operator);
+        }
+        System.out.println(";");
     }
 
  }

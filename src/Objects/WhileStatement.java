@@ -20,7 +20,7 @@ public class WhileStatement extends Expression{
             System.out.print("){\n");
             body.print();
         }
-        else
-            System.out.println("}");
+
+        System.out.println("}\n");
     }
 }

@@ -14,10 +14,8 @@ public class IfStatement extends Expression {
             System.out.println("){");
             consequent.print();
         }
-        else{
-            System.out.print("}");
-        }
 
+        System.out.print("}\n");
     }
 
 }

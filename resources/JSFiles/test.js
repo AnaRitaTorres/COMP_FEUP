@@ -22,3 +22,7 @@ while(bull<goat){ //é preciso tratar depois dos espaços para ficar o código a
         var ola="ola"+"ola";
     }
 }
+
+function ola(tuna){
+++x;
+}

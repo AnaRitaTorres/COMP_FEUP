@@ -19,7 +19,9 @@ public enum MyClass {
     ASSIGNMENTEXPRESSION(AssignmentExpression.class),
     ARRAYEXPRESSION(ArrayExpression.class),
     WHILESTATEMENT(WhileStatement.class),
-    NEWEXPRESSION(NewExpression.class);
+    NEWEXPRESSION(NewExpression.class),
+    FUNCTIONDECLARATION(FunctionDeclaration.class),
+    UPDATEEXPRESSION(UpdateExpression.class);
 
     public Class<?> myClass;
 

@@ -30,7 +30,6 @@ public class Parser {
         try {
             String jsonPath=Esprima.readJS2JSON(args[0]);
             String esprima = readEsprima(jsonPath);
-            //  System.out.print(esprima);
 
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
