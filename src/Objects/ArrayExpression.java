@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -17,25 +18,27 @@ public class ArrayExpression extends Expression {
     public void print() {
 
         if(allString() || allNumber()){
-            System.out.print("new type["); //type é para ser substituido por int,String, entre outros
+            ParserUt.getInstance().writeToBuffer("new type["); //type é para ser substituido por int,String, entre outros
             if(elements.size()>0) {
                 int i = 0;
                 while (true) {
                     elements.get(i).print();
                     i++;
                     if(i<elements.size()){
-                        System.out.print(",");
+                        ParserUt.getInstance().writeToBuffer(",");
                     }
                     else
                         break;
                 }
             }
             else
-                System.out.print("0");
-            System.out.print("]");
+                ParserUt.getInstance().writeToBuffer("0");
+            ParserUt.getInstance().writeToBuffer("]");
         }
-        else
+        else{
+            ParserUt.getInstance().writeToBuffer("//The elements of the array must all be of the same type.\n");
             System.out.println("//The elements of the array must all be of the same type.");
+        }
     }
 
     private boolean allString(){

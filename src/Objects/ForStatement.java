@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ public class ForStatement extends Expression{
     private Expression update;
 
     public void print() {
-        System.out.print("for(");
+        ParserUt.getInstance().writeToBuffer("for(");
         //i=0
         if(init.getClass().equals(AssignmentExpression.class)) {
             init.print();
@@ -22,7 +23,7 @@ public class ForStatement extends Expression{
         //var i=0
         else if(init.getClass().equals(VariableDeclaration.class)){
         }
-        System.out.println(";");
+        ParserUt.getInstance().writeToBuffer(";\n");
         //i < 10
         if(test.getClass().equals(BinaryExpression.class))
             test.print();
@@ -30,7 +31,7 @@ public class ForStatement extends Expression{
         if(update.getClass().equals(UpdateExpression.class))
             update.print();
 
-        System.out.println("){");
+        ParserUt.getInstance().writeToBuffer("){\n");
 
     }
 

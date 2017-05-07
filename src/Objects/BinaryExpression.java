@@ -1,5 +1,6 @@
 package Objects;
 import Nodes.Expression;
+import Utils.ParserUt;
 
 import java.lang.reflect.Type;
 
@@ -14,7 +15,7 @@ public class BinaryExpression extends Expression {
 
     public void print() {
         left.print();
-        System.out.print(operator);
+        ParserUt.getInstance().writeToBuffer(operator);
         right.print();
     }
 

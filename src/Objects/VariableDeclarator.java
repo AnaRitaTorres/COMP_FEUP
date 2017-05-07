@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public class VariableDeclarator extends Expression {
 
     public void print(){
         id.print();
-        System.out.print("=");
+        ParserUt.getInstance().writeToBuffer("=");
         init.print();
     }
 }

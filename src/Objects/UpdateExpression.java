@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 public class UpdateExpression extends Expression{
 
@@ -10,15 +11,15 @@ public class UpdateExpression extends Expression{
 
     public void print() {
         if(prefix){
-            System.out.print(operator);
+            ParserUt.getInstance().writeToBuffer(operator);
             argument.print();
         }
         else
         {
             argument.print();
-            System.out.print(operator);
+            ParserUt.getInstance().writeToBuffer(operator);
         }
-        System.out.println(";");
+        ParserUt.getInstance().writeToBuffer(";\n");
     }
 
  }

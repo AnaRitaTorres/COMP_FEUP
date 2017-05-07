@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 
 public class AssignmentExpression extends BinaryExpression {
@@ -8,6 +9,6 @@ public class AssignmentExpression extends BinaryExpression {
 
     public void print(){
         super.print();
-        System.out.println(";");
+        ParserUt.getInstance().writeToBuffer(";\n");
     }
 }

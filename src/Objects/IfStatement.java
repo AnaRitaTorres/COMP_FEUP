@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 public class IfStatement extends Expression {
     private Expression test;
@@ -8,14 +9,14 @@ public class IfStatement extends Expression {
     private Expression alternate;
 
     public void print(){
-        System.out.print("if(");
+        ParserUt.getInstance().writeToBuffer("if(");
         test.print();
         if(consequent.getClass().equals(BlockStatement.class)){
-            System.out.println("){");
+            ParserUt.getInstance().writeToBuffer("){\n");
             consequent.print();
         }
 
-        System.out.print("}\n");
+        ParserUt.getInstance().writeToBuffer("}\n");
     }
 
 }

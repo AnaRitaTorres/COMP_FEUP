@@ -8,6 +8,7 @@ import Esprima.rhino.Esprima;
 import Nodes.BasicNode;
 import Nodes.Expression;
 import Nodes.Reference;
+import Utils.ParserUt;
 import com.google.gson.*;
 import com.google.gson.stream.*;
 import Objects.*;
@@ -29,7 +30,8 @@ public class Parser {
 
         try {
             String jsonPath=Esprima.readJS2JSON(args[0]);
-            String esprima = readEsprima(jsonPath);
+            readEsprima(jsonPath);
+            ParserUt.getInstance().printFile();
 
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
@@ -47,7 +49,7 @@ public class Parser {
         // }
     }
 
-    public static String readEsprima(String json) {
+    public static void readEsprima(String json) {
 
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(BasicNode.class, new NodeDeserializer())
@@ -62,6 +64,5 @@ public class Parser {
         } catch (FileNotFoundException err) {
             System.err.println(err);
         }
-        return "nope";
     }
 }

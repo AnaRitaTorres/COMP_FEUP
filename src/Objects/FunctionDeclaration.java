@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 import java.util.ArrayList;
 
@@ -13,13 +14,13 @@ public class FunctionDeclaration extends Expression{
     private Boolean expression; //ainda não sei para qe serve
 
     public void print(){
-        System.out.print("public void "); //é preciso verificar o type da função
+        ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
         id.print();
-        System.out.print("(");
+        ParserUt.getInstance().writeToBuffer("(");
         printArgs();
-        System.out.println("){");
+        ParserUt.getInstance().writeToBuffer("){\n");
         body.print();
-        System.out.print("}");
+        ParserUt.getInstance().writeToBuffer("}");
     }
 
     private void printArgs(){
@@ -28,7 +29,7 @@ public class FunctionDeclaration extends Expression{
             params.get(i).print();
             i++;
             if (i < params.size()) {
-                System.out.print(",");
+                ParserUt.getInstance().writeToBuffer(",");
             } else {
                 break;
             }

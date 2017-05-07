@@ -2,12 +2,13 @@ package Objects;
 
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 public class Identifier extends Expression {
     private String name;
 
     public void print(){
-        System.out.print(name);
+        ParserUt.getInstance().writeToBuffer(name);
     }
 
     public String getName(){

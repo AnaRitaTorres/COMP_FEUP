@@ -2,6 +2,7 @@ package Objects;
 
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 import java.util.ArrayList;
 
@@ -12,23 +13,25 @@ public class NewExpression extends Expression{
     public void print(){
         if(callee.getName().equals("Array")){
             if(allString() || allNumber()){
-                System.out.print("new type["); //type é para ser substituido por int,String, entre outros
+                ParserUt.getInstance().writeToBuffer("new type["); //type é para ser substituido por int,String, entre outros
                 if(arguments.size()>0) {
                     printArgs();
                 }
                 else
-                    System.out.print("0");
-                System.out.print("]");
+                    ParserUt.getInstance().writeToBuffer("0");
+                ParserUt.getInstance().writeToBuffer("]");
             }
-            else
+            else{
+                ParserUt.getInstance().writeToBuffer("//The elements of the array must all be of the same type.\n");
                 System.out.println("//The elements of the array must all be of the same type.");
+            }
         }
         else{
-            System.out.print("new ");
+            ParserUt.getInstance().writeToBuffer("new ");
             callee.print();
-            System.out.print("(");
+            ParserUt.getInstance().writeToBuffer("(");
             printArgs();
-            System.out.print(")");
+            ParserUt.getInstance().writeToBuffer(")");
         }
     }
 
@@ -40,7 +43,7 @@ public class NewExpression extends Expression{
             if (i >= arguments.size()) {
                 break;
             } else {
-                System.out.print(",");
+                ParserUt.getInstance().writeToBuffer(",");
             }
         }
     }

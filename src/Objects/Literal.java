@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Utils.ParserUt;
 
 import java.lang.reflect.Type;
 
@@ -13,7 +14,7 @@ public  class Literal extends Expression {
 	};
 
 	public void print(){
-		System.out.print(raw);
+		ParserUt.getInstance().writeToBuffer(raw);
 	}
 
 }
