@@ -10,6 +10,7 @@ public class UpdateExpression extends Expression{
     private Boolean prefix;
 
     public void print() {
+        ParserUt.getInstance().printSpaces();
         if(prefix){
             ParserUt.getInstance().writeToBuffer(operator);
             argument.print();

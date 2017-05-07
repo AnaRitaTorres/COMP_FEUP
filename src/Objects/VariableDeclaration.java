@@ -13,6 +13,7 @@ public class VariableDeclaration extends Expression {
     public VariableDeclaration(){};
 
     public void print(){
+        ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer(kind+" "); //aqui depois em vez de kind é a variavel com o tipo (int,String,Boolean,etc)
         for (int i = 0; i < declarations.size(); i++) {
             declarations.get(i).print();

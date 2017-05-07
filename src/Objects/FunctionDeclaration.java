@@ -14,12 +14,15 @@ public class FunctionDeclaration extends Expression{
     private Boolean expression; //ainda não sei para qe serve
 
     public void print(){
+        ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
         id.print();
         ParserUt.getInstance().writeToBuffer("(");
         printArgs();
         ParserUt.getInstance().writeToBuffer("){\n");
+        //ParserUt.getInstance().addNumSpaces();
         body.print();
+        //ParserUt.getInstance().subNumSpaces();
         ParserUt.getInstance().writeToBuffer("}");
     }
 

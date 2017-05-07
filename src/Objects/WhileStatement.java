@@ -14,14 +14,18 @@ public class WhileStatement extends Expression{
     public WhileStatement createInstance(Type type){return new WhileStatement();}
 
     public void print(){
+        ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("while(");
 
         test.print();
         if(body.getClass().equals(BlockStatement.class)){
             ParserUt.getInstance().writeToBuffer("){\n");
+            ParserUt.getInstance().addNumSpaces();
             body.print();
         }
 
+        ParserUt.getInstance().subNumSpaces();
+        ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("}\n");
     }
 }

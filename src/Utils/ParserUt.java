@@ -1,6 +1,8 @@
 package Utils;
 
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -33,8 +35,12 @@ public class ParserUt {
     }
 
     public void printSpaces(){
-        for(int i=0;i<numSpaces;i++){
-            System.out.print("  ");
+        try{
+            for(int i=0;i<numSpaces;i++){
+                baos.write("    ".getBytes());
+            }
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
