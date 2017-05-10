@@ -10,7 +10,7 @@ public class WhileStatement extends Expression{
     private Expression test;
     private Expression body;
 
-    public WhileStatement(){};
+    public WhileStatement(){}
     public WhileStatement createInstance(Type type){return new WhileStatement();}
 
     public void print(){

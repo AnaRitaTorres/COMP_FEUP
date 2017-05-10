@@ -24,5 +24,13 @@ while(bull<goat){ //é preciso tratar depois dos espaços para ficar o código a
 }
 
 function ola(tuna){
-++x;
+    ++x;
+}
+
+switch(puma){
+    case 1:
+        x=2;
+        break;
+    default:
+        break;
 }

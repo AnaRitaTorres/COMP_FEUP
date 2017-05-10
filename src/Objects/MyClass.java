@@ -21,7 +21,10 @@ public enum MyClass {
     WHILESTATEMENT(WhileStatement.class),
     NEWEXPRESSION(NewExpression.class),
     FUNCTIONDECLARATION(FunctionDeclaration.class),
-    UPDATEEXPRESSION(UpdateExpression.class);
+    UPDATEEXPRESSION(UpdateExpression.class),
+    SWITCHSTATEMENT(SwitchStatement.class),
+    SWITCHCASE(SwitchCase.class),
+    BREAKSTATEMENT(BreakStatement.class);
 
     public Class<?> myClass;
 
