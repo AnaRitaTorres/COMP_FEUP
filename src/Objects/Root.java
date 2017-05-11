@@ -1,12 +1,14 @@
 package Objects;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Nodes.BasicNode;
 
 public class Root {
     private String type;
     private ArrayList<BasicNode> body;
+    private HashMap<String, String> variables;
 
     public Root(){
 
