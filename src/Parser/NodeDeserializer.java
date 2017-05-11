@@ -20,38 +20,30 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
 
             Class<? extends BasicNode> classToUse = getClassToUse(nodeType); //somehow get the Class to use based on the node type given
 
-            switch(nodeType){
+            switch (nodeType) {
                 case "VariableDeclarator":
                     JsonObject id = jsonObj.getAsJsonObject("id");
                     String name = id.get("name").getAsString();
                     String varType;
                     JsonElement value = jsonObj.get("init");
-                    if(value.isJsonNull()){
+                    if (value.isJsonNull()) {
                         varType = null;
                     } else varType = inferType(jsonObj.getAsJsonObject("init"));
 
                     Parser.addVar(name, varType);
                     break;
                 case "AssignmentExpression":
+                    id = jsonObj.getAsJsonObject("left");
+                    name = id.get("name").getAsString();
+                    value = jsonObj.getAsJsonObject("right");
+                    varType = inferType(value.getAsJsonObject());
+                    Parser.addVar(name, varType);
                     break;
-
             }
 
-            //Parser.variables.put(Parser.varToAnalyze, varType);
-            Parser.varToAnalyze = null;
-            Parser.infer = false;
-
-            if(classToUse.equals(AssignmentExpression.class)){
-                if(classToUse.equals(Identifier.class) && Parser.infer){
-                    JsonObject id = jsonObj.get("left").getAsJsonObject();
-                    //if id type = identifier
-                    //then add vartype to jsonObj value: 
-                }
-            }
-
-
-
-            return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic desearialization.
+            return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic deserialization.
+        } catch (JsonSyntaxException e){
+            throw new JsonSyntaxException(e.getMessage());
         } catch (Exception e) {
             throw new JsonParseException(e);
         }
@@ -84,7 +76,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         String varType;
         String right = inferType(jsonObj.getAsJsonObject("right"));
         String left = inferType(jsonObj.getAsJsonObject("left"));
-        String operator = jsonObj.getAsJsonObject("operator").getAsString();
+        String operator = jsonObj.get("operator").getAsString();
         if(right.equals("String") || left.equals("String")){
             if(operator.equals("+")){
                 varType = "String";

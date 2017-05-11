@@ -5,4 +5,8 @@ public abstract class Expression extends BasicNode {
     //que pode ser acedido p.e. pela classe Literal
     protected TypeReference nodetype;
     public Object value;
+
+    public Expression getId(){return new Expression() {
+    };};
+    public String getName(){return "";};
 }

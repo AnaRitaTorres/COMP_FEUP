@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Nodes.BasicNode;
+import Parser.Parser;
 
 public class Root {
     private String type;
@@ -15,12 +16,14 @@ public class Root {
     }
 
     public void print(){
+        Parser.variables.add(variables);
         System.out.println("type: " + type);
         System.out.println("body: " + body);
 
         for (int i = 0; i < body.size(); i++) {
             body.get(i).print();
         }
+        Parser.variables.remove(Parser.variables.size()-1);
     }
 
     public String toString(){
@@ -30,5 +33,9 @@ public class Root {
         }
         code += "\n}";
         return code;
+    }
+
+    public void setVariables(HashMap<String, String> vars){
+        variables = vars;
     }
 }

@@ -34,24 +34,16 @@ public class Parser {
         }
 
         try {
-            String jsonPath=Esprima.readJS2JSON(args[0]);
+            String jsonPath = Esprima.readJS2JSON(args[0]);
             readEsprima(jsonPath);
             ParserUt.getInstance().printFile();
 
+        } catch (JsonSyntaxException e){
+            System.err.println(e.getMessage());
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
-//        for (String string : variables.keySet()) {
-//            System.out.println(string);
-//        }
-
-        //InputStream esprimaStream = new ByteArrayInputStream(esprima.getBytes());
-        //try {
-        // esprimaStream.close();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
     }
 
     public static void readEsprima(String json) {
@@ -60,15 +52,11 @@ public class Parser {
                 .registerPostProcessor(BlockStatement.class, new PostProcessor<BlockStatement>() {
                     @Override
                     public void postDeserialize(BlockStatement result, JsonElement src, Gson gson) {
-                        String a = src.toString();
-                        System.out.println(result);
-                        System.out.println(a);
-                        System.out.println(gson);
                         HashMap <String, String> map = variables.get(variables.size()-1);
-                        for (String key: map.keySet()){
-                            System.out.println(map.get(key) + " " + key);
-                        }
-
+//                        for (String key: map.keySet()){
+//                            System.out.println(map.get(key) + " " + key);
+//                        }
+                        result.setVariables(map);
                         variables.remove(variables.size()-1);
                     }
 
@@ -80,9 +68,6 @@ public class Parser {
                 .registerPreProcessor(BlockStatement.class, new PreProcessor<BlockStatement>() {
                     @Override
                     public void preDeserialize(Class<? extends BlockStatement> clazz, JsonElement src, Gson gson) {
-                        System.out.println(clazz);
-                        System.out.println(src);
-                        System.out.println(gson);
                         variables.add(new HashMap<>());
                     }
                 })
@@ -96,9 +81,10 @@ public class Parser {
                     @Override
                     public void postDeserialize(Root result, JsonElement src, Gson gson) {
                         HashMap <String, String> map = variables.get(variables.size()-1);
-                        for (String key: map.keySet()){
-                            System.out.println(map.get(key) + " " + key);
-                        }
+//                        for (String key: map.keySet()){
+//                            System.out.println(map.get(key) + " " + key);
+//                        }
+                        result.setVariables(map);
                         variables.remove(variables.size()-1);
                     }
 
@@ -117,17 +103,20 @@ public class Parser {
         try {
             reader = new JsonReader(new FileReader(json));
             Root init = gson.fromJson(reader, Root.class);
-            //init.print();
+            init.print();
         } catch (FileNotFoundException err) {
             System.err.println(err);
         }
     }
 
-    public static boolean addVar(String var, String type){
+    public static void addVar(String var, String type) throws JsonSyntaxException{
         HashMap<String, String> last = variables.get(variables.size()-1);
+        String oldType = last.get(var);
+        if(oldType != null)
+            if(oldType.equals(type)) return;
+            else throw new JsonSyntaxException("Cannot redefine variable type in java. Trying to change variable " + var);
         last.put(var, type);
         variables.set(variables.size()-1, last);
-        return true;
     }
 
     public static String getVarType(String varName) throws Exception{
@@ -139,6 +128,6 @@ public class Parser {
             }
         }
 
-        throw new Exception("variable wasn't defined before.");
+        throw new JsonSyntaxException("variable wasn't defined before.");
     }
 }
