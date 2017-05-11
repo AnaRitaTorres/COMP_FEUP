@@ -10,17 +10,18 @@ public class UpdateExpression extends Expression{
     private Boolean prefix;
 
     public void print() {
+
         ParserUt.getInstance().printSpaces();
         if(prefix){
             ParserUt.getInstance().writeToBuffer(operator);
             argument.print();
         }
-        else
-        {
+        else{
+
             argument.print();
             ParserUt.getInstance().writeToBuffer(operator);
         }
-        ParserUt.getInstance().writeToBuffer(";\n");
+        //ParserUt.getInstance().writeToBuffer(";");
     }
 
  }

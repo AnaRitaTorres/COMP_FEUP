@@ -23,7 +23,7 @@ public class FunctionDeclaration extends Expression{
         //ParserUt.getInstance().addNumSpaces();
         body.print();
         //ParserUt.getInstance().subNumSpaces();
-        ParserUt.getInstance().writeToBuffer("}\n");
+        ParserUt.getInstance().writeToBuffer("\n}\n");
     }
 
     private void printArgs(){
