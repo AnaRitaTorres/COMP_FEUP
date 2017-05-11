@@ -16,8 +16,11 @@ public class VariableDeclarator extends Expression {
     public void print(){
 
         id.print();
-        ParserUt.getInstance().writeToBuffer("=");
-        init.print();
+
+        if(init != null) {
+            ParserUt.getInstance().writeToBuffer(" = ");
+            init.print();
+        }
     }
 
     public Expression getId(){

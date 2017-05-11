@@ -15,7 +15,7 @@ public class BinaryExpression extends Expression {
 
     public void print() {
         left.print();
-        ParserUt.getInstance().writeToBuffer(operator);
+        ParserUt.getInstance().writeToBuffer(" " + operator + " ");
         right.print();
     }
 
