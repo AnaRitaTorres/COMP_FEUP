@@ -1,6 +1,7 @@
 package Parser;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -12,12 +13,16 @@ import Utils.ParserUt;
 import com.google.gson.*;
 import com.google.gson.stream.*;
 import Objects.*;
+import gsonfire.GsonFireBuilder;
+import gsonfire.PostProcessor;
+import gsonfire.PreProcessor;
 
 import javax.script.ScriptException;
 
 public class Parser {
 
-    public static HashMap<String, String> variables = new HashMap<>();
+    public static ArrayList<HashMap<String, String>> variables = new ArrayList<>();
+    //public static HashMap<String, String> variables = new HashMap<>();
     public static String varToAnalyze;
     public static boolean infer = false;
 
@@ -29,29 +34,67 @@ public class Parser {
         }
 
         try {
-            String jsonPath=Esprima.readJS2JSON(args[0]);
+            String jsonPath = Esprima.readJS2JSON(args[0]);
             readEsprima(jsonPath);
             ParserUt.getInstance().printFile();
 
+        } catch (JsonSyntaxException e){
+            System.err.println(e.getMessage());
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
-        for (String string : variables.keySet()) {
-            System.out.println(string);
-        }
-
-        //InputStream esprimaStream = new ByteArrayInputStream(esprima.getBytes());
-        //try {
-        // esprimaStream.close();
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // }
     }
 
     public static void readEsprima(String json) {
 
-        Gson gson = new GsonBuilder()
+        GsonFireBuilder fireBuilder = new GsonFireBuilder()
+                .registerPostProcessor(BlockStatement.class, new PostProcessor<BlockStatement>() {
+                    @Override
+                    public void postDeserialize(BlockStatement result, JsonElement src, Gson gson) {
+                        HashMap <String, String> map = variables.get(variables.size()-1);
+//                        for (String key: map.keySet()){
+//                            System.out.println(map.get(key) + " " + key);
+//                        }
+                        result.setVariables(map);
+                        variables.remove(variables.size()-1);
+                    }
+
+                    @Override
+                    public void postSerialize(JsonElement result, BlockStatement src, Gson gson) {
+
+                    }
+                })
+                .registerPreProcessor(BlockStatement.class, new PreProcessor<BlockStatement>() {
+                    @Override
+                    public void preDeserialize(Class<? extends BlockStatement> clazz, JsonElement src, Gson gson) {
+                        variables.add(new HashMap<>());
+                    }
+                })
+                .registerPreProcessor(Root.class, new PreProcessor<Root>() {
+                    @Override
+                    public void preDeserialize(Class<? extends Root> clazz, JsonElement src, Gson gson) {
+                        variables.add(new HashMap<>());
+                    }
+                })
+                .registerPostProcessor(Root.class, new PostProcessor<Root>() {
+                    @Override
+                    public void postDeserialize(Root result, JsonElement src, Gson gson) {
+                        HashMap <String, String> map = variables.get(variables.size()-1);
+//                        for (String key: map.keySet()){
+//                            System.out.println(map.get(key) + " " + key);
+//                        }
+                        result.setVariables(map);
+                        variables.remove(variables.size()-1);
+                    }
+
+                    @Override
+                    public void postSerialize(JsonElement result, Root src, Gson gson) {
+
+                    }
+                });
+
+        Gson gson = fireBuilder.createGsonBuilder()
                 .registerTypeAdapter(BasicNode.class, new NodeDeserializer())
                 .registerTypeAdapter(Reference.class, new NodeDeserializer())
                 .registerTypeAdapter(Expression.class, new NodeDeserializer())
@@ -64,5 +107,27 @@ public class Parser {
         } catch (FileNotFoundException err) {
             System.err.println(err);
         }
+    }
+
+    public static void addVar(String var, String type) throws JsonSyntaxException{
+        HashMap<String, String> last = variables.get(variables.size()-1);
+        String oldType = last.get(var);
+        if(oldType != null)
+            if(oldType.equals(type)) return;
+            else throw new JsonSyntaxException("Cannot redefine variable type in java. Trying to change variable " + var);
+        last.put(var, type);
+        variables.set(variables.size()-1, last);
+    }
+
+    public static String getVarType(String varName) throws Exception{
+        String type;
+        for (int i = variables.size()-1; i >= 0; i--) {
+            HashMap<String, String> scope = variables.get(i);
+            if(scope.containsKey(varName)){
+                return scope.get(varName);
+            }
+        }
+
+        throw new JsonSyntaxException("variable wasn't defined before.");
     }
 }
