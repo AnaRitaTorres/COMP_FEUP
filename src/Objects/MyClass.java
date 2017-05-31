@@ -24,7 +24,8 @@ public enum MyClass {
     UPDATEEXPRESSION(UpdateExpression.class),
     SWITCHSTATEMENT(SwitchStatement.class),
     SWITCHCASE(SwitchCase.class),
-    BREAKSTATEMENT(BreakStatement.class);
+    BREAKSTATEMENT(BreakStatement.class),
+    DOWHILESTATEMENT(DoWhileStatement.class);
 
     public Class<?> myClass;
 

@@ -21,7 +21,7 @@ public class UpdateExpression extends Expression{
             argument.print();
             ParserUt.getInstance().writeToBuffer(operator);
         }
-        //ParserUt.getInstance().writeToBuffer(";");
+        ParserUt.getInstance().writeToBuffer(";");
     }
 
  }
