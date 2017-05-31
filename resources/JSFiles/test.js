@@ -17,7 +17,7 @@ while(bull<goat){
 bull=1; //temos de verificar se a variável foi declarada antes
 }
 
-while(bull<goat){ //é preciso tratar depois dos espaços para ficar o código alinhado no ficheiro java
+while(bull <goat){ //é preciso tratar depois dos espaços para ficar o código alinhado no ficheiro java
     if(bull<goat){
         var ola="ola"+"ola";
     }
@@ -34,3 +34,11 @@ switch(puma){
     default:
         break;
 }
+
+for(var i=1;i < 4;i++){
+    i++;
+
+}
+do{
+    i++;
+}while(i > 10);
