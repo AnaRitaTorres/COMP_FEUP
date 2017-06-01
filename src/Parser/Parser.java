@@ -1,6 +1,10 @@
 package Parser;
 
 import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,6 +36,10 @@ public class Parser {
             System.out.println("java Parser <jsFile>.");
             return;
         }
+
+        File directory = new File("resources/JSONFiles");
+        if(!directory.exists())
+            directory.mkdir();
 
         try {
             String jsonPath = Esprima.readJS2JSON(args[0]);
