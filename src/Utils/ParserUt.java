@@ -52,6 +52,12 @@ public class ParserUt {
         }
     }
 
+    public void eraseCharactersFromBuffer(int numCharacters){
+        String tmpBuffer=baos.toString();
+        baos.reset();
+        baos.write(tmpBuffer.getBytes(),0,tmpBuffer.length()-numCharacters);
+    }
+
     public void printFile(){
         System.out.println(baos.toString());
     }

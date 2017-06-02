@@ -26,6 +26,6 @@ public class WhileStatement extends Expression{
 
         ParserUt.getInstance().subNumSpaces();
         ParserUt.getInstance().printSpaces();
-        ParserUt.getInstance().writeToBuffer("}\n");
+        ParserUt.getInstance().writeToBuffer("}\n\n");
     }
 }

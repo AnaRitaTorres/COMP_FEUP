@@ -16,20 +16,15 @@ public class ForStatement extends Expression{
 
         if(init!=null) {
             //i=0
-            if (init.getClass().equals(AssignmentExpression.class)) {
+            if (init.getClass().equals(AssignmentExpression.class) || (init.getClass().equals(VariableDeclaration.class))){
                 init.print();
-            }
-            //var i=0
-            else if (init.getClass().equals(VariableDeclaration.class)) {
-                init.print();
+                ParserUt.getInstance().eraseCharactersFromBuffer(1);
             }
         }
         else
             ParserUt.getInstance().writeToBuffer(";");
 
-
-
-        //i < 10
+        //i<10
         if(test.getClass().equals(BinaryExpression.class)) {
 
             test.print();
@@ -38,15 +33,17 @@ public class ForStatement extends Expression{
         //i++
         if(update!=null) {
             if (update.getClass().equals(UpdateExpression.class))
+            {
                 update.print();
+                ParserUt.getInstance().eraseCharactersFromBuffer(2);
+            }
         }
-
         ParserUt.getInstance().writeToBuffer("){\n");
 
         if(body.getClass().equals(BlockStatement.class)) {
             body.print();
         }
-        ParserUt.getInstance().writeToBuffer("\n}\n");
+        ParserUt.getInstance().writeToBuffer("}\n\n");
 
     }
 

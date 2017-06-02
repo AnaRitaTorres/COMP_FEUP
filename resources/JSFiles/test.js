@@ -36,9 +36,14 @@ switch(puma){
 }
 
 for(var i=1;i < 4;i++){
+    puma=2;
     i++;
-
 }
+
 do{
     i++;
 }while(i > 10);
+
+console.log("1");
+console.log(bull);
+console.log(bull>goat);
