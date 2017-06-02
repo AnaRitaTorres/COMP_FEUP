@@ -65,4 +65,8 @@ public class ParserUt {
     public String printString(){
         return baos.toString();
     }
+
+    public void resetString(){
+        baos.reset();
+    }
 }

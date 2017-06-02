@@ -79,7 +79,6 @@ public class Interface extends JFrame implements ActionListener{
 
         add(menu);
 
-
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -87,8 +86,10 @@ public class Interface extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+
         if (actionEvent.getSource() == runButton){
 
+            javaTextArea.setText("");
             String[] lines = javascriptTextArea.getText().split("\\n");
             if(lines.length!=0){
                 try {
@@ -106,6 +107,7 @@ public class Interface extends JFrame implements ActionListener{
                     readEsprima(jsonPath);
 
                     javaTextArea.setText(ParserUt.getInstance().printString());
+                    ParserUt.getInstance().resetString();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -113,6 +115,8 @@ public class Interface extends JFrame implements ActionListener{
             }
         }
         else if(actionEvent.getSource() == chooseFileButton){
+
+            javaTextArea.setText("");
             javascriptTextArea.setText("");
             chooseFile();
 
@@ -129,6 +133,7 @@ public class Interface extends JFrame implements ActionListener{
             readEsprima(jsonPath);
 
             javaTextArea.setText(ParserUt.getInstance().printString());
+            ParserUt.getInstance().resetString();
 
         }
     }
@@ -158,11 +163,6 @@ public class Interface extends JFrame implements ActionListener{
         if (result == JFileChooser.APPROVE_OPTION) {
 
             File selectedFile = fc.getSelectedFile();
-
-            /*dir = new File("fileFromUser");
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }*/
 
             File newFile = new File( "resources/JSFiles/userFile.js");
 
