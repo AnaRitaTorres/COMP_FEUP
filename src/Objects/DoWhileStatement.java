@@ -15,10 +15,9 @@ public class DoWhileStatement extends Expression{
 
     public void print() {
         ParserUt.getInstance().printSpaces();
-        ParserUt.getInstance().writeToBuffer("do{");
-
+        ParserUt.getInstance().writeToBuffer("do{\n");
+        ParserUt.getInstance().addNumSpaces();
         if(body.getClass().equals(BlockStatement.class)){
-            ParserUt.getInstance().writeToBuffer("\n");
             body.print();
         }
 
