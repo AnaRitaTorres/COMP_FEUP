@@ -1,11 +1,18 @@
 package Gui;
 
+import javafx.stage.FileChooser;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class Interface extends JFrame implements ActionListener{
@@ -66,7 +73,7 @@ public class Interface extends JFrame implements ActionListener{
         add(menu);
 
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
     }
@@ -79,14 +86,41 @@ public class Interface extends JFrame implements ActionListener{
             //TODO:imprimi-lo no outro editor
         }
         else if(actionEvent.getSource() == chooseFileButton){
-            //TODO:abrir pop up de escolha de ficheiro
-            //TODO:fechar
+           chooseFile();
 
         }
     }
 
 
-    public static void main(String[] args) throws BadLocationException {
+    public void chooseFile(){
+        JFileChooser fc = new JFileChooser();
+
+        int result = fc.showOpenDialog(this);
+
+        if (result == JFileChooser.APPROVE_OPTION) {
+            //gets file
+            File selectedFile = fc.getSelectedFile();
+
+            System.out.println( selectedFile.getName());
+            //creates folder
+            File dir = new File("fileFromUser");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File newFile = new File(dir.toPath() + "/userFile.js");
+
+            try {
+                Files.copy(selectedFile.toPath(),newFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    public static void main(String[] args)  {
         Interface i = new Interface();
 
     }
