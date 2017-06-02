@@ -55,4 +55,8 @@ public class ParserUt {
     public void printFile(){
         System.out.println(baos.toString());
     }
+
+    public String printString(){
+        return baos.toString();
+    }
 }

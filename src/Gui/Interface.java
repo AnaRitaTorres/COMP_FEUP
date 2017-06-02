@@ -1,19 +1,21 @@
 package Gui;
 
+import Esprima.rhino.Esprima;
+import Parser.Parser;
+import Utils.ParserUt;
 import javafx.stage.FileChooser;
 
+import javax.script.ScriptException;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import static Parser.Parser.readEsprima;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
@@ -34,6 +36,8 @@ public class Interface extends JFrame implements ActionListener{
     private JButton runButton=null;
     private JButton chooseFileButton=null;
 
+    private File dir;
+
     public Interface() {
 
         super("JavaScript to Java");
@@ -47,6 +51,7 @@ public class Interface extends JFrame implements ActionListener{
         javascriptScroll.setRowHeaderView( javascriptNumber);
 
         javaTextArea = new JTextArea();
+        javaTextArea.setDisabledTextColor(Color.BLACK);
         javaTextArea.setEnabled(false);
         javaNumber = new TextLineNumber(javaTextArea);
         javaScroll = new JScrollPane(javaTextArea);
@@ -83,16 +88,55 @@ public class Interface extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == runButton){
-            //TODO:recolher o código do editor de texto
-            //TODO:tranformá-lo em java
-            //TODO:imprimi-lo no outro editor
+
+            /*String[] lines = javascriptTextArea.getText().split("\\n");
+            if(lines.length!=0){
+                try {
+                    File f = writeFile(lines);
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }*/
         }
         else if(actionEvent.getSource() == chooseFileButton){
             javascriptTextArea.setText("");
-           chooseFile();
+            chooseFile();
+
+            String jsonPath = null;
+            try {
+                jsonPath = Esprima.readJS2JSON("userFile.js");
+            } catch (ScriptException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+            readEsprima(jsonPath);
+
+            javaTextArea.setText(ParserUt.getInstance().printString());
+
         }
     }
 
+
+    public void writeFile(String[] lines) throws IOException {
+
+        /*File fout = new File(dir.toPath() + "out.js");
+        FileOutputStream fos = new FileOutputStream(fout);
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+
+        for (int i = 0; i < lines.length; i++) {
+            bw.write(lines[i]);
+            bw.newLine();
+        }
+
+        bw.close();
+        return fout;*/
+    }
 
     public void chooseFile(){
         JFileChooser fc = new JFileChooser();
@@ -103,18 +147,18 @@ public class Interface extends JFrame implements ActionListener{
 
             File selectedFile = fc.getSelectedFile();
 
-            File dir = new File("fileFromUser");
+            /*dir = new File("fileFromUser");
             if (!dir.exists()) {
                 dir.mkdirs();
-            }
+            }*/
 
-            File newFile = new File(dir.toPath() + "/userFile.js");
+            File newFile = new File( "resources/JSFiles/userFile.js");
 
             if(newFile.exists()){
                 newFile.delete();
             }
 
-            newFile =  new File(dir.toPath() + "/userFile.js");
+            newFile =  new File("resources/JSFiles/userFile.js");
 
             try {
                 Files.copy(selectedFile.toPath(),newFile.toPath());
