@@ -89,16 +89,28 @@ public class Interface extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent actionEvent) {
         if (actionEvent.getSource() == runButton){
 
-            /*String[] lines = javascriptTextArea.getText().split("\\n");
+            String[] lines = javascriptTextArea.getText().split("\\n");
             if(lines.length!=0){
                 try {
-                    File f = writeFile(lines);
+                    writeFile(lines);
+                    String jsonPath = null;
+                    try {
+                        jsonPath = Esprima.readJS2JSON("out.js");
+                    } catch (ScriptException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                    readEsprima(jsonPath);
 
+                    javaTextArea.setText(ParserUt.getInstance().printString());
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
         }
         else if(actionEvent.getSource() == chooseFileButton){
             javascriptTextArea.setText("");
@@ -124,7 +136,7 @@ public class Interface extends JFrame implements ActionListener{
 
     public void writeFile(String[] lines) throws IOException {
 
-        /*File fout = new File(dir.toPath() + "out.js");
+        File fout = new File("resources/JSFiles/out.js");
         FileOutputStream fos = new FileOutputStream(fout);
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
@@ -135,7 +147,7 @@ public class Interface extends JFrame implements ActionListener{
         }
 
         bw.close();
-        return fout;*/
+
     }
 
     public void chooseFile(){
