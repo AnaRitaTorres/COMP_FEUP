@@ -29,6 +29,8 @@ public class Interface extends JFrame implements ActionListener{
 
         super("JavaScript to Java");
 
+        setSize(1000,1000);
+        setLocationRelativeTo(null);
 
         javascriptTextArea = new JTextArea();
         javascriptNumber = new TextLineNumber(javascriptTextArea);
@@ -65,7 +67,6 @@ public class Interface extends JFrame implements ActionListener{
 
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000,1000);
         setVisible(true);
 
     }

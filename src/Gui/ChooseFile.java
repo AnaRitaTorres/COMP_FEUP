@@ -19,41 +19,34 @@ public class ChooseFile extends JFrame implements ActionListener {
 
     public ChooseFile(){
 
+
+        setSize(300,200);
+        setLocationRelativeTo(null);
+
         fc = new JFileChooser();
-        buttons = new JPanel(new GridBagLayout());
-
-        GridBagConstraints cs = new GridBagConstraints();
-        cs.fill = GridBagConstraints.HORIZONTAL;
-
+        buttons = new JPanel();
+        setLayout(new GridBagLayout());
 
         openButton = new JButton("Open");
-        cs.gridx = 0;
-        cs.gridy = 0;
-        cs.gridwidth = 1;
-        buttons.add(openButton,cs);
+        openButton.setHorizontalAlignment(SwingConstants.LEFT);
+        buttons.add(openButton);
 
         saveButton = new JButton("Save");
-        cs.gridx = 1;
-        cs.gridy = 0;
-        cs.gridwidth = 2;
-        buttons.add(saveButton,cs);
+        saveButton.setHorizontalAlignment(SwingConstants.CENTER);
+        buttons.add(saveButton);
 
         cancelButton = new JButton("Cancel");
-        cs.gridx = 2;
-        cs.gridy = 0;
-        cs.gridwidth = 3;
-        buttons.add(cancelButton,cs);
+        cancelButton.setHorizontalAlignment(SwingConstants.RIGHT);
+        buttons.add(cancelButton);
 
         openButton.addActionListener(this);
         saveButton.addActionListener(this);
         cancelButton.addActionListener(this);
 
+       add(buttons,  new GridBagConstraints());
 
-        add(buttons);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500,300);
-        setVisible(true);
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setVisible(true);
     }
 
     public JFileChooser getFc() {
