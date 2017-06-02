@@ -7,7 +7,9 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -86,23 +88,21 @@ public class Interface extends JFrame implements ActionListener{
             //TODO:imprimi-lo no outro editor
         }
         else if(actionEvent.getSource() == chooseFileButton){
+            javascriptTextArea.setText("");
            chooseFile();
-
         }
     }
 
 
     public void chooseFile(){
         JFileChooser fc = new JFileChooser();
-
+        File media = null;
         int result = fc.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
-            //gets file
+
             File selectedFile = fc.getSelectedFile();
 
-            System.out.println( selectedFile.getName());
-            //creates folder
             File dir = new File("fileFromUser");
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -110,11 +110,32 @@ public class Interface extends JFrame implements ActionListener{
 
             File newFile = new File(dir.toPath() + "/userFile.js");
 
+            if(newFile.exists()){
+                newFile.delete();
+            }
+
+            newFile =  new File(dir.toPath() + "/userFile.js");
+
             try {
                 Files.copy(selectedFile.toPath(),newFile.toPath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            media = newFile;
+        }
+
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new FileReader(media));
+            String str;
+            while ((str = in.readLine()) != null) {
+                javascriptTextArea.append(str + "\n");
+            }
+
+        } catch (IOException e) {
+        } finally {
+            try { in.close(); } catch (Exception ex) { }
         }
 
 
