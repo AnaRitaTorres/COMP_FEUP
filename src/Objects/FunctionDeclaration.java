@@ -20,10 +20,10 @@ public class FunctionDeclaration extends Expression{
         ParserUt.getInstance().writeToBuffer("(");
         printArgs();
         ParserUt.getInstance().writeToBuffer("){\n");
-        //ParserUt.getInstance().addNumSpaces();
+        ParserUt.getInstance().addNumSpaces();
         body.print();
-        //ParserUt.getInstance().subNumSpaces();
-        ParserUt.getInstance().writeToBuffer("\n}\n");
+        ParserUt.getInstance().subNumSpaces();
+        ParserUt.getInstance().writeToBuffer("}\n\n");
     }
 
     private void printArgs(){

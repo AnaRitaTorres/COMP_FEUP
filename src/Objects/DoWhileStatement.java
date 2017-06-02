@@ -5,9 +5,6 @@ import Utils.ParserUt;
 
 import java.lang.reflect.Type;
 
-/**
- * Created by rita on 31-05-2017.
- */
 public class DoWhileStatement extends Expression{
 
     private Expression test;
@@ -18,18 +15,16 @@ public class DoWhileStatement extends Expression{
 
     public void print() {
         ParserUt.getInstance().printSpaces();
-        ParserUt.getInstance().writeToBuffer("do{");
-
+        ParserUt.getInstance().writeToBuffer("do{\n");
+        ParserUt.getInstance().addNumSpaces();
         if(body.getClass().equals(BlockStatement.class)){
-            ParserUt.getInstance().writeToBuffer("\n");
             body.print();
-            ParserUt.getInstance().writeToBuffer("\n");
         }
 
         ParserUt.getInstance().subNumSpaces();
         ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("}while(");
         test.print();
-        ParserUt.getInstance().writeToBuffer(");\n");
+        ParserUt.getInstance().writeToBuffer(");\n\n");
     }
 }

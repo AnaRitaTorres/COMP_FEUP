@@ -23,6 +23,6 @@ public class SwitchStatement extends Expression{
             cases.get(i).print();
         }
         ParserUt.getInstance().subNumSpaces();
-        ParserUt.getInstance().writeToBuffer("}\n");
+        ParserUt.getInstance().writeToBuffer("}\n\n");
     }
 }

@@ -11,17 +11,15 @@ public class UpdateExpression extends Expression{
 
     public void print() {
 
-        ParserUt.getInstance().printSpaces();
         if(prefix){
             ParserUt.getInstance().writeToBuffer(operator);
             argument.print();
         }
         else{
-
             argument.print();
             ParserUt.getInstance().writeToBuffer(operator);
         }
-        ParserUt.getInstance().writeToBuffer(";");
+        ParserUt.getInstance().writeToBuffer(";\n");
     }
 
  }

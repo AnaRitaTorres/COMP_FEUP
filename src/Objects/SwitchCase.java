@@ -26,8 +26,6 @@ public class SwitchCase extends Expression{
         for(int i=0;i<consequent.size();i++){
             ParserUt.getInstance().printSpaces();
             consequent.get(i).print();
-            if(i != consequent.size()-1)
-                ParserUt.getInstance().writeToBuffer("\n");
         }
     }
 }

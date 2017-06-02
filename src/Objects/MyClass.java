@@ -25,7 +25,9 @@ public enum MyClass {
     SWITCHSTATEMENT(SwitchStatement.class),
     SWITCHCASE(SwitchCase.class),
     BREAKSTATEMENT(BreakStatement.class),
-    DOWHILESTATEMENT(DoWhileStatement.class);
+    DOWHILESTATEMENT(DoWhileStatement.class),
+    MEMBEREXPRESSION(MemberExpression.class),
+    CALLEXPRESSION(CallExpression.class);
 
     public Class<?> myClass;
 
