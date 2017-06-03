@@ -31,8 +31,8 @@ public class Parser {
         }
         int a;
 
-        Gson gson=new Gson();
-        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+//         Gson gson=new Gson();
+//        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
 
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())

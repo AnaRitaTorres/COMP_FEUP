@@ -10,4 +10,6 @@ public abstract class BasicNode{
     public void print(){
 
     }
+
+    public void print(String type){print();}
 }

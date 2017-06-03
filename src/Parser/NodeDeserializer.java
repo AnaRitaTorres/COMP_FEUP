@@ -90,8 +90,8 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             String nextType = inferType(array.get(i).getAsJsonObject());
             if(nextType.equals("int"))
                 nextType = "Integer";
-            else if(nextType.equals("long"))
-                nextType = "Long";
+            else if(nextType.equals("double"))
+                nextType = "Double";
             if(!type.isEmpty()){
                 if(nextType.contains("ArrayList") && type.contains("ArrayList")){
                     if(!nextType.equals(type)){
@@ -102,7 +102,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     //TODO in case of type number and next is String. See if String is a number with regex
                 }else if(nextType.equals("String")){
                     type = nextType;
-                } else if(nextType.equals("Long") && type.equals("Integer")){
+                } else if(nextType.equals("Double") && type.equals("Integer")){
                     type = nextType;
                 }
             } else type = nextType;
@@ -134,12 +134,15 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         String varType;
         JsonElement value = jsonObj.get("raw");
         try {
-            value.getAsInt();
-            if(value.getAsString().contains("."))
-                varType = "long";
-            else varType = "int";
+            value.getAsDouble();
+            if(!value.getAsString().contains("."))
+                varType = "int";
+            else varType = "double";
         }catch(Exception err){
-            varType = "String";
+
+            if(value.getAsBoolean()){
+                varType = "boolean";
+            }else varType = "String";
         }
         return varType;
     }
