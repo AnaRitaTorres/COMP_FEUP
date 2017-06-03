@@ -139,7 +139,10 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                 varType = "int";
             else varType = "double";
         }catch(Exception err){
-            varType = "String";
+
+            if(value.getAsBoolean()){
+                varType = "boolean";
+            }else varType = "String";
         }
         return varType;
     }
