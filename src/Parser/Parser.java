@@ -76,6 +76,32 @@ public class Parser {
                         variables.add(new HashMap<>());
                     }
                 })
+
+
+                .registerPostProcessor(ReturnStatement.class, new PostProcessor<ReturnStatement>() {
+                    @Override
+                    public void postDeserialize(ReturnStatement result, JsonElement src, Gson gson) {
+                        HashMap <String, String> map = variables.get(variables.size()-1);
+//                        for (String key: map.keySet()){
+//                            System.out.println(map.get(key) + " " + key);
+//                        }
+                        //result.setVariables(map);
+                        variables.remove(variables.size()-1);
+                    }
+
+                    @Override
+                    public void postSerialize(JsonElement result, ReturnStatement src, Gson gson) {
+
+                    }
+                })
+                .registerPreProcessor(ReturnStatement.class, new PreProcessor<ReturnStatement>() {
+                    @Override
+                    public void preDeserialize(Class<? extends ReturnStatement> clazz, JsonElement src, Gson gson) {
+                        variables.add(new HashMap<>());
+                    }
+                })
+
+
                 .registerPreProcessor(Root.class, new PreProcessor<Root>() {
                     @Override
                     public void preDeserialize(Class<? extends Root> clazz, JsonElement src, Gson gson) {

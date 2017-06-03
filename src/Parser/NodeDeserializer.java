@@ -40,6 +40,10 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     varType = inferType(value.getAsJsonObject());
                     Parser.addVar(name, varType);
                     break;
+                case "ReturnStatement":
+                    JsonObject arg = jsonObj.getAsJsonObject("argument");
+                    varType = inferType(arg);
+
             }
 
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic deserialization.
@@ -128,7 +132,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
 
     private String inferLiteral(JsonObject jsonObj){
         String varType;
-        JsonElement value = jsonObj.get("value");
+        JsonElement value = jsonObj.get("raw");
         try {
             value.getAsInt();
             if(value.getAsString().contains("."))
