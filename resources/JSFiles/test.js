@@ -9,43 +9,48 @@ var frog = [1,2,3,4];
 var fish = "babe";
 var b=new user(1,2,3);
 
-if(bull<goat){
-var ola="ola"+"ola";
-}
+function User(name,age){
+    //var n=name; falta ver isto ainda não reconhece os argumentos
+    //var a=age;
+     var line="ola";
+     var num=1;
 
-while(bull<goat){
-bull=1; //temos de verificar se a variável foi declarada antes
-}
-
-while(bull <goat){ //é preciso tratar depois dos espaços para ficar o código alinhado no ficheiro java
     if(bull<goat){
         var ola="ola"+"ola";
     }
+
+    while(bull<goat){
+        bull=1; //temos de verificar se a variável foi declarada antes
+    }
+
+    while(bull <goat){ //é preciso tratar depois dos espaços para ficar o código alinhado no ficheiro java
+        if(bull<goat){
+            var ola="ola"+"ola";
+        }
+    }
+
+    return line;
 }
 
-function User(name,age){
-    var n;
-    var a;
-    age++;
+function main(){
+    switch(puma){
+        case 1:
+            x=2;
+            break;
+        default:
+            break;
+    }
+
+    for(var i=1;i < 4;i++){
+        puma=2;
+        i++;
+    }
+
+    do{
+        i++;
+    }while(i > 10);
+
+    console.log("1");
+    console.log(bull);
+    console.log(bull>goat);
 }
-
-switch(puma){
-    case 1:
-        x=2;
-        break;
-    default:
-        break;
-}
-
-for(var i=1;i < 4;i++){
-    puma=2;
-    i++;
-}
-
-do{
-    i++;
-}while(i > 10);
-
-console.log("1");
-console.log(bull);
-console.log(bull>goat);

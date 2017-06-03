@@ -16,7 +16,12 @@ public class VariableDeclaration extends Expression {
     public void print(){
         defKind();
         ParserUt.getInstance().printSpaces();
-        ParserUt.getInstance().writeToBuffer(kind+" "); //aqui depois em vez de kind é a variavel com o tipo (int,String,Boolean,etc)
+        if(ParserUt.getInstance().getPrintState()== Parser.PrintState.GLOBAL_VARIABLES){
+            ParserUt.getInstance().writeToBuffer("private "+kind+" "); //aqui depois em vez de kind é a variavel com o tipo (int,String,Boolean,etc)
+        } else {
+            ParserUt.getInstance().writeToBuffer(kind+" "); //aqui depois em vez de kind é a variavel com o tipo (int,String,Boolean,etc)
+        }
+
         for (int i = 0; i < declarations.size(); i++) {
             declarations.get(i).print();
             ParserUt.getInstance().writeToBuffer(";\n");

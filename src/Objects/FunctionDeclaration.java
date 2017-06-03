@@ -17,6 +17,11 @@ public class FunctionDeclaration extends Expression{
     private FunctionState State;
 
     public void print(){
+        if(ParserUt.getInstance().getPrintState()==Parser.PrintState.GLOBAL_VARIABLES){
+            ParserUt.getInstance().writeToBuffer("\n");
+            ParserUt.getInstance().setPrintState(Parser.PrintState.FUNCTIONS);
+        }
+
         if(params.size()>0){
             getParamsTypes();
         }
@@ -25,11 +30,17 @@ public class FunctionDeclaration extends Expression{
         ParserUt.getInstance().printSpaces();
         switch(State){
             case OK:
-                ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
-                id.print();
-                ParserUt.getInstance().writeToBuffer("(");
-                printArgs();
-                ParserUt.getInstance().writeToBuffer("){\n");
+                if(id.getName().equals("main")){
+                    ParserUt.getInstance().writeToBuffer("public void main(String[] args) {\n"); //é preciso verificar o type da função
+                    ParserUt.getInstance().setPrintState(Parser.PrintState.MAIN);
+                }
+                else {
+                    ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
+                    id.print();
+                    ParserUt.getInstance().writeToBuffer("(");
+                    printArgs();
+                    ParserUt.getInstance().writeToBuffer("){\n");
+                }
                 ParserUt.getInstance().addNumSpaces();
                 body.print();
                 ParserUt.getInstance().subNumSpaces();

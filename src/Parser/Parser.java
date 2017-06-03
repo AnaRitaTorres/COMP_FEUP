@@ -162,6 +162,10 @@ public class Parser {
         throw new JsonSyntaxException("variable wasn't defined before.");
     }
 
+    public enum PrintState{
+        GLOBAL_VARIABLES,FUNCTIONS,MAIN
+    }
+
     public static Types getTypes(){
         return types;
     }

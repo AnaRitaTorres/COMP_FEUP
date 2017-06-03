@@ -12,11 +12,16 @@ public class ForStatement extends Expression{
     private Expression body;
 
     public void print() {
+        ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("for(");
 
         if(init!=null) { //i=0
-            if (init.getClass().equals(AssignmentExpression.class) || (init.getClass().equals(VariableDeclaration.class))){
+            if (init.getClass().equals(AssignmentExpression.class)){
                 init.print();
+                ParserUt.getInstance().eraseCharactersFromBuffer(1);
+            } else if(init.getClass().equals(VariableDeclaration.class)){
+                init.print();
+                ParserUt.getInstance().clearLastSpaces();
                 ParserUt.getInstance().eraseCharactersFromBuffer(1);
             }
         }

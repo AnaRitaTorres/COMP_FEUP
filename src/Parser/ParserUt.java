@@ -3,12 +3,13 @@ package Parser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import Parser.Parser.PrintState;
 
 public class ParserUt {
     private int numSpaces;
     private ByteArrayOutputStream baos;
     private static ParserUt instance=null;
-    private PrintState printState=PrintState.GLOBAL_VARIABLES;
+    private static Parser.PrintState printState= Parser.PrintState.GLOBAL_VARIABLES;
 
     protected ParserUt(){
         numSpaces=0;
@@ -26,7 +27,7 @@ public class ParserUt {
 
     public void initializeBuffer(){
         try {
-            baos.write("public class MainClass{\n".getBytes());
+            baos.write("public class MainClass {\n".getBytes());
             addNumSpaces();
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,6 +78,21 @@ public class ParserUt {
         }
     }
 
+    public void clearLastSpaces(){
+        String reverseBuffer = new StringBuilder(baos.toString()).reverse().toString();
+        String[] parts=reverseBuffer.split("[(]",2);
+        String first="("+new StringBuilder(parts[0]).reverse().toString();
+        String second=new StringBuilder(parts[1]).reverse().toString();
+        first=first.replaceAll("    ","");
+        baos.reset();
+        try {
+            baos.write(second.getBytes());
+            baos.write(first.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String printString(){
         return baos.toString();
     }
@@ -85,7 +101,11 @@ public class ParserUt {
         baos.reset();
     }
 
-    public enum PrintState{
-        GLOBAL_VARIABLES,FUNCTIONS,MAIN
+    public PrintState getPrintState(){
+        return printState;
+    }
+
+    public void setPrintState(PrintState state){
+        printState=state;
     }
 }
