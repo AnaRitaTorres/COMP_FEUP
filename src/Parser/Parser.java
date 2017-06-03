@@ -24,14 +24,18 @@ public class Parser {
     public static String varToAnalyze;
     public static boolean infer = false;
 
-    public static void main(String[] args) throws JsonParseException {
+    public static void main(String[] args) throws JsonParseException, FileNotFoundException {
 
         if(args.length != 1){
             System.out.println("java Parser <jsFile>.");
             return;
         }
 
-        File directory = new File("resources/JSONFiles");
+        Gson gson=new Gson();
+        TypesVars types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),TypesVars.class);
+        types.print();
+
+        /*File directory = new File("resources/JSONFiles");
         if(!directory.exists())
             directory.mkdir();
 
@@ -44,7 +48,7 @@ public class Parser {
             System.err.println(e.getMessage());
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 

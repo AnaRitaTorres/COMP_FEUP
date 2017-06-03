@@ -43,6 +43,7 @@ public class ForStatement extends Expression{
             body.print();
         }
         ParserUt.getInstance().subNumSpaces();
+        ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("}\n\n");
 
     }

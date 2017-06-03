@@ -12,6 +12,7 @@ public class ParserUt {
     protected ParserUt(){
         numSpaces=0;
         baos=new ByteArrayOutputStream();
+        initializeBuffer();
     }
 
     public static ParserUt getInstance(){
@@ -20,6 +21,15 @@ public class ParserUt {
         }
 
         return instance;
+    }
+
+    public void initializeBuffer(){
+        try {
+            baos.write("public class MainClass{\n".getBytes());
+            addNumSpaces();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void addNumSpaces(){
@@ -57,7 +67,13 @@ public class ParserUt {
     }
 
     public void printFile(){
-        System.out.println(baos.toString());
+        try {
+            subNumSpaces();
+            baos.write("}\n".getBytes());
+            System.out.println(baos.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String printString(){
