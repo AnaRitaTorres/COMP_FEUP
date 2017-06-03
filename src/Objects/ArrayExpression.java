@@ -17,8 +17,8 @@ public class ArrayExpression extends Expression {
 
     public void print() {
 
-        if(allString() || allNumber()){
-            ParserUt.getInstance().writeToBuffer("new type["); //type é para ser substituido por int,String, entre outros
+        if(allString() || allNumber()){//TODO switch this line with something else
+            ParserUt.getInstance().writeToBuffer("new ArrayList<>(Arrays.asList(");
             if(elements.size()>0) {
                 int i = 0;
                 while (true) {
@@ -33,7 +33,7 @@ public class ArrayExpression extends Expression {
             }
             else
                 ParserUt.getInstance().writeToBuffer("0");
-            ParserUt.getInstance().writeToBuffer("]");
+            ParserUt.getInstance().writeToBuffer("))");
         }
         else{
             ParserUt.getInstance().writeToBuffer("//The elements of the array must all be of the same type.\n");

@@ -1,8 +1,7 @@
 package Parser;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import Esprima.rhino.Esprima;
 import Nodes.BasicNode;
@@ -32,10 +31,10 @@ public class Parser {
         }
 
         Gson gson=new Gson();
-        TypesVars types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),TypesVars.class);
-        types.print();
+        //TypesVars types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),TypesVars.class);
+        //types.print();
 
-        /*File directory = new File("resources/JSONFiles");
+        File directory = new File("resources/JSONFiles");
         if(!directory.exists())
             directory.mkdir();
 
@@ -48,7 +47,7 @@ public class Parser {
             System.err.println(e.getMessage());
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
-        }*/
+        }
 
     }
 
