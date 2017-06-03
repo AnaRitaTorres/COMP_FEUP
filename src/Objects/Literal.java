@@ -17,4 +17,12 @@ public  class Literal extends Expression {
 		ParserUt.getInstance().writeToBuffer(raw);
 	}
 
+	public void print(String type){
+		if(type.contains("String") && !raw.contains("\"")){
+			raw = "\"" + raw + "\"";
+		}else if(type.contains("Double") && !raw.contains(".")){
+			raw += ".0";
+		}
+		print();
+	}
 }

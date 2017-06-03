@@ -30,9 +30,10 @@ public class Parser {
             return;
         }
         int a;
+        ArrayList<Double> frog = new ArrayList<>(Arrays.asList(1.9,2.0,3.0,4.0));
 
-        Gson gson=new Gson();
-        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+//         Gson gson=new Gson();
+//        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
 
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())

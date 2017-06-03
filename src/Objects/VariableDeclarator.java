@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Parser.Parser;
 import Parser.ParserUt;
 
 public class VariableDeclarator extends Expression {
@@ -16,7 +17,12 @@ public class VariableDeclarator extends Expression {
 
         if(init != null) {
             ParserUt.getInstance().writeToBuffer(" = ");
-            init.print();
+            try {
+                String type = Parser.getVarType(id.getName());
+                init.print(type);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
