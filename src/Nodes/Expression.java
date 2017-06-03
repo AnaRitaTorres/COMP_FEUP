@@ -7,6 +7,7 @@ public abstract class Expression extends BasicNode {
     public Object value;
 
     public Expression getId(){return new Expression() {
-    };};
-    public String getName(){return "";};
+    };}
+    public String getName(){return "";}
+    public TypeReference getNodetype(){return nodetype;}
 }

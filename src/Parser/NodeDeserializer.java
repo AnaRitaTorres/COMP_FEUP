@@ -2,6 +2,7 @@ package Parser;
 import Nodes.BasicNode;
 import Objects.*;
 import com.google.gson.*;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -40,9 +41,26 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     varType = inferType(value.getAsJsonObject());
                     Parser.addVar(name, varType);
                     break;
-                case "ReturnStatement":
+                /*case "ReturnStatement":
                     JsonObject arg = jsonObj.getAsJsonObject("argument");
-                    varType = inferType(arg);
+                    varType = inferType(arg);*/
+                case "FunctionDeclaration":
+                    id = jsonObj.getAsJsonObject("id");
+                    JsonObject body = jsonObj.getAsJsonObject("body");
+                    //ParserUt.getInstance().writeToBuffer(body.getAsString());
+                    //JsonObject retObj = body.getAsJsonObject("ReturnStatement");
+                    //String sret = retObj.getAsString();
+                    //ParserUt.getInstance().writeToBuffer(sret);
+
+                    //JsonObject Btype = body.getAsJsonArray().get("type").getAsJsonObject();
+
+                    //ParserUt.getInstance().writeToBuffer(Btype.getAsString());
+                    //JsonObject arg = retObj.get("argument").getAsJsonObject();
+                    //arg.getAsJsonObject("type");
+
+                    //varType = inferType(arg.getAsJsonObject());
+                   // ReturnStatement ret = new ReturnStatement();
+                    //ret.setArgType(varType);
 
             }
 

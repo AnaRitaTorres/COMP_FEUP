@@ -15,6 +15,7 @@ public class FunctionDeclaration extends Expression{
     private Boolean generator; //ainda nao sei para que serve
     private Boolean expression; //ainda não sei para qe serve
     private FunctionState State;
+    private ReturnStatement ret;
 
     public void print(){
         if(ParserUt.getInstance().getPrintState()==Parser.PrintState.GLOBAL_VARIABLES){
@@ -30,12 +31,26 @@ public class FunctionDeclaration extends Expression{
         ParserUt.getInstance().printSpaces();
         switch(State){
             case OK:
-                if(id.getName().equals("main")){
-                    ParserUt.getInstance().writeToBuffer("public void main(String[] args) {\n"); //é preciso verificar o type da função
+                if(id.getName().equals("main")){ //TODO: public private etc
+
+                    if(ret == null){
+                        ParserUt.getInstance().writeToBuffer("public void main(String[] args) {");
+                    } else { //escreve o type da função
+                        ParserUt.getInstance().writeToBuffer("public ");
+                        ret.printType();
+                        ParserUt.getInstance().writeToBuffer(" main(String[] args) {\n");
+                    }
                     ParserUt.getInstance().setPrintState(Parser.PrintState.MAIN);
                 }
                 else {
-                    ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
+                    if(ret == null) {
+                        ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
+                    }
+                    else {
+                        ParserUt.getInstance().writeToBuffer("public cereja ");
+                        ret.printType();
+                        ParserUt.getInstance().writeToBuffer(" ");
+                    }
                     id.print();
                     ParserUt.getInstance().writeToBuffer("(");
                     printArgs();

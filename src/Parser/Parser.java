@@ -102,6 +102,30 @@ public class Parser {
                 })
 
 
+                .registerPostProcessor(FunctionDeclaration.class, new PostProcessor<FunctionDeclaration>() {
+                    @Override
+                    public void postDeserialize(FunctionDeclaration result, JsonElement src, Gson gson) {
+                        HashMap <String, String> map = variables.get(variables.size()-1);
+//                        for (String key: map.keySet()){
+//                            System.out.println(map.get(key) + " " + key);
+//                        }
+                        //result.setVariables(map);
+                        variables.remove(variables.size()-1);
+                    }
+
+                    @Override
+                    public void postSerialize(JsonElement result, FunctionDeclaration src, Gson gson) {
+
+                    }
+                })
+                .registerPreProcessor(FunctionDeclaration.class, new PreProcessor<FunctionDeclaration>() {
+                    @Override
+                    public void preDeserialize(Class<? extends FunctionDeclaration> clazz, JsonElement src, Gson gson) {
+                        variables.add(new HashMap<>());
+                    }
+                })
+
+
                 .registerPreProcessor(Root.class, new PreProcessor<Root>() {
                     @Override
                     public void preDeserialize(Class<? extends Root> clazz, JsonElement src, Gson gson) {
