@@ -100,7 +100,7 @@ public class Interface extends JFrame implements ActionListener{
                     }
                     readEsprima(jsonPath);
 
-                    javaTextArea.setText(ParserUt.getInstance().printString());
+                    javaTextArea.setText(ParserUt.getInstance().printFile());
                     ParserUt.getInstance().resetString();
 
                 } catch (IOException e) {
@@ -126,7 +126,7 @@ public class Interface extends JFrame implements ActionListener{
             }
             readEsprima(jsonPath);
 
-            javaTextArea.setText(ParserUt.getInstance().printString());
+            javaTextArea.setText(ParserUt.getInstance().printFile());
             ParserUt.getInstance().resetString();
 
         }

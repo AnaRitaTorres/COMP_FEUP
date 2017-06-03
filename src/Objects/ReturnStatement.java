@@ -11,8 +11,6 @@ public class ReturnStatement extends Expression {
         ParserUt.getInstance().writeToBuffer("return ");
         argument.print();
         ParserUt.getInstance().writeToBuffer(";\n");
-
-
     }
 
 }

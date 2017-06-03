@@ -1,6 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
+import Parser.Parser;
 import Parser.ParserUt;
 
 public class UpdateExpression extends Expression{
@@ -10,28 +11,19 @@ public class UpdateExpression extends Expression{
     private Boolean prefix;
 
     public void print() {
-
-        if(prefix){
-            ParserUt.getInstance().writeToBuffer(operator);
-            argument.print();
+        if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){
+            if(prefix){
+                ParserUt.getInstance().writeToBuffer(operator);
+                argument.print();
+            }
+            else{
+                argument.print();
+                ParserUt.getInstance().writeToBuffer(operator);
+            }
+            ParserUt.getInstance().writeToBuffer(";\n");
+        } else {
+            ParserUt.getInstance().writeToBuffer("//Update expression only valid inside functions.\n\n");
         }
-        else{
-            argument.print();
-            ParserUt.getInstance().writeToBuffer(operator);
-        }
-        ParserUt.getInstance().writeToBuffer(";\n");
     }
 
  }
-
-
- /*
- *
- * {
- *  "a": {type="int" isFunction=false},
- *  "print: {type="void", isFunction=true, args: {}, vars:{}}
- * }
- *
- *
- * var a = new A;
- * */

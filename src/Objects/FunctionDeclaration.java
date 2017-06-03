@@ -30,6 +30,7 @@ public class FunctionDeclaration extends Expression{
         ParserUt.getInstance().printSpaces();
         switch(State){
             case OK:
+                ParserUt.getInstance().setInFunction(true);
                 if(id.getName().equals("main")){
                     ParserUt.getInstance().writeToBuffer("public void main(String[] args) {\n"); //é preciso verificar o type da função
                     ParserUt.getInstance().setPrintState(Parser.PrintState.MAIN);
@@ -46,6 +47,7 @@ public class FunctionDeclaration extends Expression{
                 ParserUt.getInstance().subNumSpaces();
                 ParserUt.getInstance().printSpaces();
                 ParserUt.getInstance().writeToBuffer("}\n\n");
+                ParserUt.getInstance().setInFunction(false);
                 break;
             case MISS_ARGUMENTS:
                 ParserUt.getInstance().writeToBuffer("//Miss the types of some elements of the function.\n\n");

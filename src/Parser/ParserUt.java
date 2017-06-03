@@ -10,6 +10,7 @@ public class ParserUt {
     private ByteArrayOutputStream baos;
     private static ParserUt instance=null;
     private static Parser.PrintState printState= Parser.PrintState.GLOBAL_VARIABLES;
+    private boolean inFunction=false;
 
     protected ParserUt(){
         numSpaces=0;
@@ -68,7 +69,7 @@ public class ParserUt {
         baos.write(tmpBuffer.getBytes(),0,tmpBuffer.length()-numCharacters);
     }
 
-    public void printFile(){
+    public String printFile(){
         try {
             subNumSpaces();
             baos.write("}\n".getBytes());
@@ -76,6 +77,7 @@ public class ParserUt {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return baos.toString();
     }
 
     public void clearLastSpaces(){
@@ -93,12 +95,17 @@ public class ParserUt {
         }
     }
 
-    public String printString(){
-        return baos.toString();
-    }
-
     public void resetString(){
         baos.reset();
+        initializeBuffer();
+    }
+
+    public boolean getInFunction(){
+        return inFunction;
+    }
+
+    public void setInFunction(boolean in){
+        inFunction=in;
     }
 
     public PrintState getPrintState(){

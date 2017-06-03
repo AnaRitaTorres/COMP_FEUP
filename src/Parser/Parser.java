@@ -29,10 +29,9 @@ public class Parser {
             System.out.println("java Parser <jsFile>.");
             return;
         }
-        int a;
 
-//         Gson gson=new Gson();
-//        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+        Gson gson=new Gson();
+        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
 
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())
@@ -42,7 +41,6 @@ public class Parser {
             String jsonPath = Esprima.readJS2JSON(args[0]);
             readEsprima(jsonPath);
             ParserUt.getInstance().printFile();
-
         } catch (JsonSyntaxException e){
             System.err.println(e.getMessage());
         } catch (ScriptException | IOException | NoSuchMethodException e) {
