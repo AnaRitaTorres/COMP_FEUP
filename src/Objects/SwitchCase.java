@@ -23,7 +23,6 @@ public class SwitchCase extends Expression{
             ParserUt.getInstance().writeToBuffer(":\n");
         }
         for(int i=0;i<consequent.size();i++){
-            ParserUt.getInstance().printSpaces();
             consequent.get(i).print();
         }
     }

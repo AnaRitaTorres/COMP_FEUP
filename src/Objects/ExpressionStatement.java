@@ -2,6 +2,7 @@ package Objects;
 
 
 import Nodes.Expression;
+import Parser.Parser;
 import Parser.ParserUt;
 
 public class ExpressionStatement extends Expression {
@@ -9,6 +10,10 @@ public class ExpressionStatement extends Expression {
 
     public void print(){
         ParserUt.getInstance().printSpaces();
-        expression.print();
+        if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){
+            expression.print();
+        } else {
+            ParserUt.getInstance().writeToBuffer("//Expression statement only valid inside functions.\n\n");
+        }
     }
 }

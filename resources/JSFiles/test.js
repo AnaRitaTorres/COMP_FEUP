@@ -25,12 +25,14 @@ function User(name,age){
 
     while(bull <goat){ //é preciso tratar depois dos espaços para ficar o código alinhado no ficheiro java
         if(bull<goat){
-            var ola="ola"+"ola";
+            ola="ola";
         }
     }
 
     return line;
 }
+
+var k=0;
 
 function main(){
     switch(puma){

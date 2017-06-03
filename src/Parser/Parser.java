@@ -29,26 +29,30 @@ public class Parser {
             System.out.println("java Parser <jsFile>.");
             return;
         }
-        int a;
 
-//         Gson gson=new Gson();
-//        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+        Parser parser=new Parser();
+        parser.start(args[0]);
+    }
+
+    public Parser() throws FileNotFoundException {
+        Gson gson=new Gson();
+ //       types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
 
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())
             directory.mkdir();
+    }
 
+    public void start(String jsFile){
         try {
-            String jsonPath = Esprima.readJS2JSON(args[0]);
+            String jsonPath = Esprima.readJS2JSON(jsFile);
             readEsprima(jsonPath);
             ParserUt.getInstance().printFile();
-
         } catch (JsonSyntaxException e){
             System.err.println(e.getMessage());
         } catch (ScriptException | IOException | NoSuchMethodException e) {
             e.printStackTrace();
         }
-
     }
 
     public static void readEsprima(String json) {

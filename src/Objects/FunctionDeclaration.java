@@ -31,6 +31,7 @@ public class FunctionDeclaration extends Expression{
         ParserUt.getInstance().printSpaces();
         switch(State){
             case OK:
+                ParserUt.getInstance().setInFunction(true);
                 if(id.getName().equals("main")){ //TODO: public private etc
 
                     if(ret == null){
@@ -40,6 +41,7 @@ public class FunctionDeclaration extends Expression{
                         ret.printType();
                         ParserUt.getInstance().writeToBuffer(" main(String[] args) {\n");
                     }
+
                     ParserUt.getInstance().setPrintState(Parser.PrintState.MAIN);
                 }
                 else {
@@ -47,7 +49,7 @@ public class FunctionDeclaration extends Expression{
                         ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
                     }
                     else {
-                        ParserUt.getInstance().writeToBuffer("public cereja ");
+                        ParserUt.getInstance().writeToBuffer("public ");
                         ret.printType();
                         ParserUt.getInstance().writeToBuffer(" ");
                     }
@@ -61,6 +63,7 @@ public class FunctionDeclaration extends Expression{
                 ParserUt.getInstance().subNumSpaces();
                 ParserUt.getInstance().printSpaces();
                 ParserUt.getInstance().writeToBuffer("}\n\n");
+                ParserUt.getInstance().setInFunction(false);
                 break;
             case MISS_ARGUMENTS:
                 ParserUt.getInstance().writeToBuffer("//Miss the types of some elements of the function.\n\n");

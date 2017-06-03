@@ -14,11 +14,6 @@ public class ReturnStatement extends Expression {
         ParserUt.getInstance().writeToBuffer(argType);
     }
 
-    public void fromJsonObject(){
-
-
-    }
-
     public void print(){
         ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("return ");
