@@ -132,7 +132,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
 
     private String inferLiteral(JsonObject jsonObj){
         String varType;
-        JsonElement value = jsonObj.get("value");
+        JsonElement value = jsonObj.get("raw");
         try {
             value.getAsInt();
             if(value.getAsString().contains("."))
