@@ -40,6 +40,10 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     varType = inferType(value.getAsJsonObject());
                     Parser.addVar(name, varType);
                     break;
+                case "ReturnStatement":
+                    JsonObject arg = jsonObj.getAsJsonObject("argument");
+                    varType = inferType(arg);
+
             }
 
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic deserialization.
