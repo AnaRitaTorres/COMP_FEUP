@@ -23,8 +23,10 @@ while(bull <goat){ //é preciso tratar depois dos espaços para ficar o código 
     }
 }
 
-function ola(tuna){
-    ++x;
+function User(name,age){
+    var n;
+    var a;
+    age++;
 }
 
 switch(puma){

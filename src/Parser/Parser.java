@@ -19,9 +19,9 @@ import javax.script.ScriptException;
 public class Parser {
 
     public static ArrayList<HashMap<String, String>> variables = new ArrayList<>();
-    //public static HashMap<String, String> variables = new HashMap<>();
     public static String varToAnalyze;
     public static boolean infer = false;
+    public static Types types;
 
     public static void main(String[] args) throws JsonParseException, FileNotFoundException {
 
@@ -29,10 +29,10 @@ public class Parser {
             System.out.println("java Parser <jsFile>.");
             return;
         }
+        int a;
 
         Gson gson=new Gson();
-        //TypesVars types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),TypesVars.class);
-        //types.print();
+        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
 
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())
@@ -134,5 +134,9 @@ public class Parser {
         }
 
         throw new JsonSyntaxException("variable wasn't defined before.");
+    }
+
+    public static Types getTypes(){
+        return types;
     }
 }

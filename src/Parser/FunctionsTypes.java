@@ -9,13 +9,13 @@ public class FunctionsTypes {
     private HashMap<String,String> vars;
 
     public void print(){
-        System.out.println("Name: "+name);
+    }
 
-        Iterator it=args.entrySet().iterator();
-        while(it.hasNext()){
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            System.out.println(pair.getKey()+": "+pair.getValue());
-            it.remove();
-        }
+    public String getName(){
+        return name;
+    }
+
+    public HashMap<String,String> getArgs(){
+        return args;
     }
 }

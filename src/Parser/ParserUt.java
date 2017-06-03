@@ -8,6 +8,7 @@ public class ParserUt {
     private int numSpaces;
     private ByteArrayOutputStream baos;
     private static ParserUt instance=null;
+    private PrintState printState=PrintState.GLOBAL_VARIABLES;
 
     protected ParserUt(){
         numSpaces=0;
@@ -82,5 +83,9 @@ public class ParserUt {
 
     public void resetString(){
         baos.reset();
+    }
+
+    public enum PrintState{
+        GLOBAL_VARIABLES,FUNCTIONS,MAIN
     }
 }
