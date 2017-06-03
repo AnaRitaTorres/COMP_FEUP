@@ -28,7 +28,9 @@ public enum MyClass {
     DOWHILESTATEMENT(DoWhileStatement.class),
     MEMBEREXPRESSION(MemberExpression.class),
     CALLEXPRESSION(CallExpression.class),
-    RETURNSTATEMENT(ReturnStatement.class);
+    RETURNSTATEMENT(ReturnStatement.class),
+    TRYSTATEMENT(TryStatement.class),
+    CATCHCLAUSE(CatchClause.class);
 
     public Class<?> myClass;
 

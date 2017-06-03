@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.file.Files;
 
-import static Parser.Parser.readEsprima;
+import Parser.Parser;
 
 
 public class Interface extends JFrame implements ActionListener{
@@ -31,8 +31,9 @@ public class Interface extends JFrame implements ActionListener{
     private JButton chooseFileButton=null;
 
     private File dir;
+    private Parser parser;
 
-    public Interface() {
+    public Interface() throws FileNotFoundException {
 
         super("JavaScript to Java");
 
@@ -73,6 +74,8 @@ public class Interface extends JFrame implements ActionListener{
 
         add(menu);
 
+        parser=new Parser();
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
@@ -88,17 +91,7 @@ public class Interface extends JFrame implements ActionListener{
             if(lines.length!=0){
                 try {
                     writeFile(lines);
-                    String jsonPath = null;
-                    try {
-                        jsonPath = Esprima.readJS2JSON("out.js");
-                    } catch (ScriptException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    }
-                    readEsprima(jsonPath);
+                    parser.start("out.js");
 
                     javaTextArea.setText(ParserUt.getInstance().printFile());
                     ParserUt.getInstance().resetString();
@@ -114,17 +107,7 @@ public class Interface extends JFrame implements ActionListener{
             javascriptTextArea.setText("");
             chooseFile();
 
-            String jsonPath = null;
-            try {
-                jsonPath = Esprima.readJS2JSON("userFile.js");
-            } catch (ScriptException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            }
-            readEsprima(jsonPath);
+            parser.start("out.js");
 
             javaTextArea.setText(ParserUt.getInstance().printFile());
             ParserUt.getInstance().resetString();
@@ -134,7 +117,6 @@ public class Interface extends JFrame implements ActionListener{
 
 
     public void writeFile(String[] lines) throws IOException {
-
         File fout = new File("resources/JSFiles/out.js");
         FileOutputStream fos = new FileOutputStream(fout);
 
@@ -146,7 +128,6 @@ public class Interface extends JFrame implements ActionListener{
         }
 
         bw.close();
-
     }
 
     public void chooseFile(){
@@ -191,7 +172,7 @@ public class Interface extends JFrame implements ActionListener{
 
     }
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) throws FileNotFoundException {
         Interface i = new Interface();
     }
 

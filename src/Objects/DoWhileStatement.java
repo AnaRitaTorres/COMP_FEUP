@@ -15,8 +15,8 @@ public class DoWhileStatement extends Expression{
     public DoWhileStatement createInstance(Type type){return new DoWhileStatement();}
 
     public void print() {
+        ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!=Parser.PrintState.GLOBAL_VARIABLES){
-            ParserUt.getInstance().printSpaces();
             ParserUt.getInstance().writeToBuffer("do{\n");
             ParserUt.getInstance().addNumSpaces();
             if(body.getClass().equals(BlockStatement.class)){
@@ -29,7 +29,7 @@ public class DoWhileStatement extends Expression{
             test.print();
             ParserUt.getInstance().writeToBuffer(");\n\n");
         } else {
-            ParserUt.getInstance().writeToBuffer("// Do while method can only be used inside functions.\n\n");
+            ParserUt.getInstance().writeToBuffer("//Do while method can only be used inside functions.\n\n");
         }
     }
 }

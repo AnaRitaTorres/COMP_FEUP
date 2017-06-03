@@ -15,8 +15,8 @@ public class WhileStatement extends Expression{
     public WhileStatement createInstance(Type type){return new WhileStatement();}
 
     public void print(){
+        ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){
-            ParserUt.getInstance().printSpaces();
             ParserUt.getInstance().writeToBuffer("while(");
 
             test.print();

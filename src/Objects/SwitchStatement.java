@@ -14,8 +14,8 @@ public class SwitchStatement extends Expression{
     public SwitchStatement(){}
 
     public void print(){
+        ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){
-            ParserUt.getInstance().printSpaces();
             ParserUt.getInstance().writeToBuffer("switch(");
             discriminant.print();
             ParserUt.getInstance().writeToBuffer("){\n");

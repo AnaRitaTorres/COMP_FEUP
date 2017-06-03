@@ -10,8 +10,8 @@ public class IfStatement extends Expression {
     private Expression alternate;
 
     public void print(){
+        ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){
-            ParserUt.getInstance().printSpaces();
             ParserUt.getInstance().writeToBuffer("if(");
             test.print();
             if(consequent.getClass().equals(BlockStatement.class)){

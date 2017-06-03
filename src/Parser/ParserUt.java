@@ -71,8 +71,13 @@ public class ParserUt {
 
     public String printFile(){
         try {
-            subNumSpaces();
-            baos.write("}\n".getBytes());
+            if(printState!=PrintState.MAIN){
+                baos.reset();
+                baos.write("//Main function doesn't exists.".getBytes());
+            } else {
+                subNumSpaces();
+                baos.write("}\n".getBytes());
+            }
             System.out.println(baos.toString());
         } catch (IOException e) {
             e.printStackTrace();

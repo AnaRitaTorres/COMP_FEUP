@@ -13,8 +13,8 @@ public class ForStatement extends Expression{
     private Expression body;
 
     public void print() {
+        ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){
-            ParserUt.getInstance().printSpaces();
             ParserUt.getInstance().writeToBuffer("for(");
 
             if(init!=null) { //i=0
