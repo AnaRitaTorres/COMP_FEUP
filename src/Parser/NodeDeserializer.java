@@ -4,6 +4,7 @@ import Objects.*;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class NodeDeserializer implements JsonDeserializer<BasicNode> {
 
@@ -68,8 +69,42 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                 varType = inferType(jsonObj.getAsJsonObject("right"));
                 Parser.addVar(var.get("name").getAsString(), varType);
                 break;
+            case "ArrayExpression":
+                varType = "ArrayList<";
+                JsonArray array = jsonObj.getAsJsonArray("elements");
+                String arrayType = analyzeArray(array);
+                varType += arrayType + ">";
+                break;
         }
         return varType;
+    }
+
+    private String analyzeArray(JsonArray array) throws Exception{
+        String type = "";
+
+        for (int i = 0; i < array.size(); i++) {
+            String nextType = inferType(array.get(i).getAsJsonObject());
+            if(nextType.equals("int"))
+                nextType = "Integer";
+            else if(nextType.equals("long"))
+                nextType = "Long";
+            if(!type.isEmpty()){
+                if(nextType.contains("ArrayList") && type.contains("ArrayList")){
+                    if(!nextType.equals(type)){
+                        throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
+                    }
+                }else if(nextType.contains("ArrayList") ^ type.contains("ArrayList")){
+                    throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
+                    //TODO in case of type number and next is String. See if String is a number with regex
+                }else if(nextType.equals("String")){
+                    type = nextType;
+                } else if(nextType.equals("Long") && type.equals("Integer")){
+                    type = nextType;
+                }
+            } else type = nextType;
+        }
+
+        return type;
     }
 
     private String inferBinary(JsonObject jsonObj) throws Exception{
