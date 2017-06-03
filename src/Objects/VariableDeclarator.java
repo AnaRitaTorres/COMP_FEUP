@@ -1,10 +1,7 @@
 package Objects;
 
 import Nodes.Expression;
-import Parser.Parser;
-import Utils.ParserUt;
-
-import java.util.ArrayList;
+import Parser.ParserUt;
 
 public class VariableDeclarator extends Expression {
 

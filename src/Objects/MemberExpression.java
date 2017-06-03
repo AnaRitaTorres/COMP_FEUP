@@ -1,10 +1,6 @@
 package Objects;
 
 import Nodes.Expression;
-import Parser.Parser;
-import Utils.ParserUt;
-
-import java.util.ArrayList;
 
 public class MemberExpression extends Expression{
     private boolean computed;

@@ -1,19 +1,13 @@
 package Parser;
 
 import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import Esprima.rhino.Esprima;
 import Nodes.BasicNode;
 import Nodes.Expression;
 import Nodes.Reference;
-import Utils.ParserUt;
 import com.google.gson.*;
 import com.google.gson.stream.*;
 import Objects.*;

@@ -1,7 +1,6 @@
 package Objects;
 
-import Nodes.Expression;
-import Utils.ParserUt;
+import Parser.ParserUt;
 
 
 public class AssignmentExpression extends BinaryExpression {

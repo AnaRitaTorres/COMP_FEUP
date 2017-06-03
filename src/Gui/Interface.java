@@ -1,22 +1,16 @@
 package Gui;
 
 import Esprima.rhino.Esprima;
-import Parser.Parser;
-import Utils.ParserUt;
-import javafx.stage.FileChooser;
-
+import Parser.ParserUt;
 import javax.script.ScriptException;
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 
 import static Parser.Parser.readEsprima;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class Interface extends JFrame implements ActionListener{
@@ -199,7 +193,6 @@ public class Interface extends JFrame implements ActionListener{
 
     public static void main(String[] args)  {
         Interface i = new Interface();
-
     }
 
 
