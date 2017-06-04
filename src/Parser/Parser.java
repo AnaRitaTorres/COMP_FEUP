@@ -36,7 +36,7 @@ public class Parser {
 
     public Parser() throws FileNotFoundException {
         Gson gson=new Gson();
- //       types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
 
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())

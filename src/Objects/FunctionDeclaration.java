@@ -35,7 +35,7 @@ public class FunctionDeclaration extends Expression{
                 if(id.getName().equals("main")){ //TODO: public private etc
 
                     if(ret == null){
-                        ParserUt.getInstance().writeToBuffer("public void main(String[] args) {");
+                        ParserUt.getInstance().writeToBuffer("public void main(String[] args) {\n");
                     } else { //escreve o type da função
                         ParserUt.getInstance().writeToBuffer("public ");
                         ret.printType();
