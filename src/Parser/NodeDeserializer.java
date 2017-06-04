@@ -51,6 +51,9 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     Parser.getVarType(name);
                     Parser.addVar(name, varType);
                     break;
+                case "CallExpression":
+                    analyzeFunction(jsonObj);
+                    break;
                 /*case "ReturnStatement":
                     JsonObject arg = jsonObj.getAsJsonObject("argument");
                     varType = inferType(arg);*/
@@ -80,6 +83,13 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         } catch (Exception e) {
             throw new JsonParseException(e);
         }
+    }
+
+    private String analyzeFunction(JsonObject jsonObj){
+        JsonArray arguments = jsonObj.getAsJsonArray("arguments");
+        String functionName = jsonObj.getAsJsonObject("callee").get("name").getAsString();
+        //TODO check if defined and pass the arguments types
+        return "";
     }
 
     private String inferType(JsonObject jsonObj) throws Exception{
