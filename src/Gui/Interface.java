@@ -28,8 +28,9 @@ public class Interface extends JFrame implements ActionListener{
 
     private JPanel menuOptions=null;
     private JButton runButton=null;
-    private JButton chooseFileButton=null;
+    private JButton chooseJSFileButton=null;
     private JRadioButton jsonButton=null;
+    private JButton chooseJsonFileButton=null;
 
     private JOptionPane inputInvalid=null;
 
@@ -59,8 +60,12 @@ public class Interface extends JFrame implements ActionListener{
         runButton = new JButton("Run");
         runButton.addActionListener(this);
 
-        chooseFileButton = new JButton("Choose JS File");
-        chooseFileButton.addActionListener(this);
+        chooseJSFileButton = new JButton("Choose JS File");
+        chooseJSFileButton.addActionListener(this);
+
+        chooseJsonFileButton = new JButton("Choose JSON File");
+        chooseJsonFileButton.addActionListener(this);
+
 
         jsonButton = new JRadioButton("Insert Type Json File");
         jsonButton.addActionListener(this);
@@ -68,9 +73,11 @@ public class Interface extends JFrame implements ActionListener{
 
 
         menuOptions.add(runButton);
-        menuOptions.add(chooseFileButton);
+        menuOptions.add(chooseJSFileButton);
+        menuOptions.add(chooseJsonFileButton);
         menuOptions.add(jsonButton);
 
+        chooseJsonFileButton.setVisible(false);
 
         divideEditors = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,javascriptScroll,javaScroll);
         divideEditors.setResizeWeight(0.5);
@@ -116,11 +123,11 @@ public class Interface extends JFrame implements ActionListener{
             }
 
         }
-        else if(actionEvent.getSource() == chooseFileButton){
+        else if(actionEvent.getSource() == chooseJSFileButton){
 
             javaTextArea.setText("");
             javascriptTextArea.setText("");
-            chooseFile();
+            chooseFile("resources/JSFiles/userFile.js");
 
             parser.start("userInput.js");
 
@@ -128,8 +135,15 @@ public class Interface extends JFrame implements ActionListener{
             ParserUt.getInstance().resetString();
 
         }
-        else if(actionEvent.getSource() == jsonButton){
+        else if(actionEvent.getSource() == chooseJsonFileButton){
+            chooseFile("resources/JSONFiles/userJson.json");
 
+        }
+        else if(actionEvent.getSource() == jsonButton){
+            if(jsonButton.isSelected())
+                chooseJsonFileButton.setVisible(true);
+            else
+                chooseJsonFileButton.setVisible(false);
         }
     }
 
@@ -148,7 +162,7 @@ public class Interface extends JFrame implements ActionListener{
         bw.close();
     }
 
-    public void chooseFile(){
+    public void chooseFile(String path){
         JFileChooser fc = new JFileChooser();
         File media = null;
         boolean fileWasSelected=false;
@@ -160,13 +174,13 @@ public class Interface extends JFrame implements ActionListener{
             if(selectedFile.exists())
                 fileWasSelected=true;
 
-            File newFile = new File( "resources/JSFiles/userFile.js");
+            File newFile = new File(path);
 
             if(newFile.exists()){
                 newFile.delete();
             }
 
-            newFile =  new File("resources/JSFiles/userFile.js");
+            newFile =  new File(path);
 
             try {
                 Files.copy(selectedFile.toPath(),newFile.toPath());
