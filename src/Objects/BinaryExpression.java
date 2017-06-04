@@ -16,10 +16,21 @@ public class BinaryExpression extends Expression {
     public BinaryExpression createInstance(Type type){return new BinaryExpression();}
 
     public void print() {
+        String type="";
+
+        if(right.getType().equals(("ArrayExpression"))){
+            try {
+                type = left.getVarType();
+
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+        left.print(type);
+
         if(left.getType().equals("MemberExpression")){
-            //TODO a[i] = 4; -> a.add(i, 4);
-            //     a[i] += 3 -> a.add(i, a.get(i) + 4);
-            System.out.println("lol");
+            right.print(type);
+            ParserUt.getInstance().writeToBuffer(")");
         }else {
             left.print();
             ParserUt.getInstance().writeToBuffer(" " + operator + " ");

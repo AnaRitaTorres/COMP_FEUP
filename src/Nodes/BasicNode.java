@@ -16,4 +16,6 @@ public abstract class BasicNode{
     public String getType() {
         return type;
     }
+
+    public String getVarType() throws Exception{return "";}
 }
