@@ -187,7 +187,7 @@ public class Parser {
             }
         }
 
-        throw new JsonSyntaxException("variable wasn't defined before.");
+        throw new JsonSyntaxException("Variable " + varName + " wasn't defined before.");
     }
 
     public enum PrintState{
