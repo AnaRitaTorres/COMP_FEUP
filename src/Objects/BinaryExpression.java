@@ -3,6 +3,8 @@ import Nodes.Expression;
 import Parser.ParserUt;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BinaryExpression extends Expression {
 
@@ -14,9 +16,15 @@ public class BinaryExpression extends Expression {
     public BinaryExpression createInstance(Type type){return new BinaryExpression();}
 
     public void print() {
-        left.print();
-        ParserUt.getInstance().writeToBuffer(" " + operator + " ");
-        right.print();
+        if(left.getType().equals("MemberExpression")){
+            //TODO a[i] = 4; -> a.add(i, 4);
+            //     a[i] += 3 -> a.add(i, a.get(i) + 4);
+            System.out.println("lol");
+        }else {
+            left.print();
+            ParserUt.getInstance().writeToBuffer(" " + operator + " ");
+            right.print();
+        }
     }
 
     @Override

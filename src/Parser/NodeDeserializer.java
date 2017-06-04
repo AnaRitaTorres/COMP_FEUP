@@ -36,9 +36,19 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     break;
                 case "AssignmentExpression":
                     id = jsonObj.getAsJsonObject("left");
-                    name = id.get("name").getAsString();
+                    String leftType = id.get("type").getAsString();
                     value = jsonObj.getAsJsonObject("right");
-                    varType = inferType(value.getAsJsonObject());
+                    if(leftType.toUpperCase().equals(MyClass.IDENTIFIER.name())) {
+                        name = id.get("name").getAsString();
+                        varType = inferType(value.getAsJsonObject());
+                    }else if(leftType.toUpperCase().equals(MyClass.MEMBEREXPRESSION.name())){
+                        name = getVarFromMember(id);
+                        varType = "ArrayList<" + inferType(value.getAsJsonObject()) + ">";
+                    } else{
+                        name = "";
+                        varType = "";
+                    }
+                    Parser.getVarType(name);
                     Parser.addVar(name, varType);
                     break;
                 /*case "ReturnStatement":
@@ -163,6 +173,16 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             }else varType = "String";
         }
         return varType;
+    }
+
+    private String getVarFromMember(JsonObject jsonObj) {
+        String name;
+        JsonObject obj = jsonObj.getAsJsonObject("object");
+        if(obj.get("type").getAsString().equals("MemberExpression")){
+            name = getVarFromMember(obj);
+        }else name = obj.get("name").getAsString();
+
+        return name;
     }
 
     private Class<? extends BasicNode> getClassToUse(String nodeType) {

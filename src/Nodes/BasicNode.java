@@ -12,4 +12,8 @@ public abstract class BasicNode{
     }
 
     public void print(String type){print();}
+
+    public String getType() {
+        return type;
+    }
 }
