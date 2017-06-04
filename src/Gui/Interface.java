@@ -29,9 +29,9 @@ public class Interface extends JFrame implements ActionListener{
     private JPanel menuOptions=null;
     private JButton runButton=null;
     private JButton chooseFileButton=null;
+    private JRadioButton jsonButton=null;
 
-    private File dir;
-    private Parser parser;
+    private Parser parser=null;
 
     public Interface() throws FileNotFoundException {
 
@@ -57,11 +57,16 @@ public class Interface extends JFrame implements ActionListener{
         runButton = new JButton("Run");
         runButton.addActionListener(this);
 
-        chooseFileButton = new JButton("Choose File");
+        chooseFileButton = new JButton("Choose JS File");
         chooseFileButton.addActionListener(this);
+
+        jsonButton = new JRadioButton("Insert Type Json File");
+        jsonButton.addActionListener(this);
+
 
         menuOptions.add(runButton);
         menuOptions.add(chooseFileButton);
+        menuOptions.add(jsonButton);
 
 
         divideEditors = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,javascriptScroll,javaScroll);
@@ -113,6 +118,9 @@ public class Interface extends JFrame implements ActionListener{
             ParserUt.getInstance().resetString();
 
         }
+        else if(actionEvent.getSource() == jsonButton){
+
+        }
     }
 
 
@@ -133,11 +141,14 @@ public class Interface extends JFrame implements ActionListener{
     public void chooseFile(){
         JFileChooser fc = new JFileChooser();
         File media = null;
+        boolean fileWasSelected=false;
         int result = fc.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
             File selectedFile = fc.getSelectedFile();
+            if(selectedFile.exists())
+                fileWasSelected=true;
 
             File newFile = new File( "resources/JSFiles/userFile.js");
 
@@ -157,16 +168,21 @@ public class Interface extends JFrame implements ActionListener{
         }
 
         BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(media));
-            String str;
-            while ((str = in.readLine()) != null) {
-                javascriptTextArea.append(str + "\n");
-            }
+        if(fileWasSelected) {
+            try {
+                in = new BufferedReader(new FileReader(media));
+                String str;
+                while ((str = in.readLine()) != null) {
+                    javascriptTextArea.append(str + "\n");
+                }
 
-        } catch (IOException e) {
-        } finally {
-            try { in.close(); } catch (Exception ex) { }
+            } catch (IOException e) {
+            } finally {
+                try {
+                    in.close();
+                } catch (Exception ex) {
+                }
+            }
         }
 
 
