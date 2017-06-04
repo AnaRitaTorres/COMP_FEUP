@@ -31,6 +31,8 @@ public class Interface extends JFrame implements ActionListener{
     private JButton chooseFileButton=null;
     private JRadioButton jsonButton=null;
 
+    private JOptionPane inputInvalid=null;
+
     private Parser parser=null;
 
     public Interface() throws FileNotFoundException {
@@ -64,6 +66,7 @@ public class Interface extends JFrame implements ActionListener{
         jsonButton.addActionListener(this);
 
 
+
         menuOptions.add(runButton);
         menuOptions.add(chooseFileButton);
         menuOptions.add(jsonButton);
@@ -93,10 +96,16 @@ public class Interface extends JFrame implements ActionListener{
 
             javaTextArea.setText("");
             String[] lines = javascriptTextArea.getText().split("\\n");
-            if(lines.length!=0){
+
+            if(javascriptTextArea.getText().length()==0){
+                inputInvalid.showMessageDialog(this,
+                        "Input is Empty","Warning",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            else if(lines.length!=0){
                 try {
                     writeFile(lines);
-                    parser.start("out.js");
+                    parser.start("userInput.js");
 
                     javaTextArea.setText(ParserUt.getInstance().printFile());
                     ParserUt.getInstance().resetString();
@@ -105,6 +114,7 @@ public class Interface extends JFrame implements ActionListener{
                     e.printStackTrace();
                 }
             }
+
         }
         else if(actionEvent.getSource() == chooseFileButton){
 
@@ -112,7 +122,7 @@ public class Interface extends JFrame implements ActionListener{
             javascriptTextArea.setText("");
             chooseFile();
 
-            parser.start("out.js");
+            parser.start("userInput.js");
 
             javaTextArea.setText(ParserUt.getInstance().printFile());
             ParserUt.getInstance().resetString();
@@ -125,7 +135,7 @@ public class Interface extends JFrame implements ActionListener{
 
 
     public void writeFile(String[] lines) throws IOException {
-        File fout = new File("resources/JSFiles/out.js");
+        File fout = new File("resources/JSFiles/userInput.js");
         FileOutputStream fos = new FileOutputStream(fout);
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
