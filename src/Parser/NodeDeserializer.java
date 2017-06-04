@@ -85,11 +85,21 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         }
     }
 
-    private String analyzeFunction(JsonObject jsonObj){
+    private void analyzeFunction(JsonObject jsonObj) throws Exception{
         JsonArray arguments = jsonObj.getAsJsonArray("arguments");
-        String functionName = jsonObj.getAsJsonObject("callee").get("name").getAsString();
+        JsonObject callee = jsonObj.getAsJsonObject("callee");
+        if(!callee.get("type").getAsString().equals("Identifier")) return;
+        ArrayList<String> args = new ArrayList<>();
+        String functionName = callee.get("name").getAsString();
+        for (int i = 0; i < arguments.size(); i++) {
+            JsonObject element = arguments.get(i).getAsJsonObject();
+            String type = inferType(element);
+            args.add(type);
+        }
+        System.out.println(args);
+        Parser.types.addFunction(functionName, args);
         //TODO check if defined and pass the arguments types
-        return "";
+
     }
 
     private String inferType(JsonObject jsonObj) throws Exception{
@@ -130,20 +140,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                 nextType = "Integer";
             else if(nextType.equals("double"))
                 nextType = "Double";
-            if(!type.isEmpty()){
-                if(nextType.contains("ArrayList") && type.contains("ArrayList")){
-                    if(!nextType.equals(type)){
-                        throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
-                    }
-                }else if(nextType.contains("ArrayList") ^ type.contains("ArrayList")){
-                    throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
-                    //TODO in case of type number and next is String. See if String is a number with regex
-                }else if(nextType.equals("String")){
-                    type = nextType;
-                } else if(nextType.equals("Double") && type.equals("Integer")){
-                    type = nextType;
-                }
-            } else type = nextType;
+            type = Parser.compareTypes(type, nextType);
         }
 
         return type;

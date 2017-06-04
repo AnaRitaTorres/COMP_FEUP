@@ -1,12 +1,18 @@
 package Parser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class FunctionsTypes {
     private String name;
-    private HashMap<String,String> args;
+    private ArrayList<String> args;
     private HashMap<String,String> vars;
+
+    FunctionsTypes(String name, ArrayList<String> args){
+        this.name = name;
+        this.args = args;
+    }
 
     public void print(){
     }
@@ -15,7 +21,11 @@ public class FunctionsTypes {
         return name;
     }
 
-    public HashMap<String,String> getArgs(){
+    public ArrayList<String> getArgs(){
         return args;
+    }
+
+    public void setArgs(ArrayList<String> args){
+        this.args = args;
     }
 }

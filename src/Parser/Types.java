@@ -9,14 +9,46 @@ public class Types {
     private HashMap<String,String> vars;
     private ArrayList<FunctionsTypes> functions;
 
+    Types(){
+        functions = new ArrayList<>();
+    }
+
     public void print(){
         for(int i=0;i<functions.size();i++){
             functions.get(i).print();
         }
     }
 
+    public boolean isCompatible(String functionName, ArrayList<String> params) throws Exception{
+        for (int i = 0; i < functions.size(); i++) {
+            if(functions.get(i).getName().equals(functionName)){
+                ArrayList<String> args = functions.get(i).getArgs();
+                ArrayList<String> modified = new ArrayList<>();
+                if(params.size() != args.size()){
+                    throw new Exception("Can't call functions with different types of parameters");
+                }
+                for (int j = 0; j < params.size(); j++) {
+                    modified.add(Parser.compareTypes(args.get(i), params.get(i)));
+
+                }
+                functions.get(i).setArgs(modified);
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addFunction(String functionName, ArrayList<String> params) throws Exception{
+        if(!isCompatible(functionName, params)){
+            FunctionsTypes type = new FunctionsTypes(functionName, params);
+            functions.add(type);
+        }
+
+    }
+
     public ArrayList<String> getTypeArgumentFunction(String functionName,ArrayList<Identifier> argument) throws Exception {
-        HashMap<String,String> tmpArgs=null;
+        ArrayList<String> tmpArgs=null;
         for(int i=0;i<functions.size();i++){
             FunctionsTypes tmpFt=functions.get(i);
             if(tmpFt.getName().equals(functionName)){
@@ -29,16 +61,8 @@ public class Types {
             return null;
         }
 
-        ArrayList<String> tmpTypeArgs=new ArrayList<>();
-        for(int i=0;i<argument.size();i++){
-            String tmpArg=argument.get(i).getName();
-            if(tmpArgs.containsKey(tmpArg)){
-                tmpTypeArgs.add(tmpArgs.get(tmpArg));
-            }
-        }
-
-        if(tmpTypeArgs.size()==argument.size()){
-            return tmpTypeArgs;
+        if(tmpArgs.size()==argument.size()){
+            return tmpArgs;
         }
         else
             throw new Exception("Not declared all the arguments.");

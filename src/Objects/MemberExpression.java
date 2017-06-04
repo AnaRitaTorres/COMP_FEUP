@@ -11,9 +11,14 @@ public class MemberExpression extends Expression{
 
     public void print() {
         object.print();
-        ParserUt.getInstance().writeToBuffer(".add(");
-        property.print();
-        ParserUt.getInstance().writeToBuffer(", ");
+        if(!computed){
+            ParserUt.getInstance().writeToBuffer(".");
+            property.print();
+        }
+//        object.print();
+//        ParserUt.getInstance().writeToBuffer(".add(");
+//        property.print();
+//        ParserUt.getInstance().writeToBuffer(", ");
     }
 
     public String getObjectName(){
