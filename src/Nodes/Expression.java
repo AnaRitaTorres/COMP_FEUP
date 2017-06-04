@@ -10,4 +10,10 @@ public abstract class Expression extends BasicNode {
     };}
     public String getName(){return "";}
     public TypeReference getNodetype(){return nodetype;}
+    public String getPropertyName(){
+        return "";
+    }
+    public String getObjectName(){
+        return "";
+    }
 }

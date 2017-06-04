@@ -29,6 +29,12 @@ public class Parser {
             System.out.println("java Parser <jsFile>.");
             return;
         }
+//        ArrayList<ArrayList<ArrayList<Integer>>> r = new ArrayList<>();
+//        r.set(0, new ArrayList<>(3));
+//        r.get(0).add(new ArrayList<>(Arrays.asList(0)));
+//        System.out.println(r);
+//        r.get(0).get(0).set(0, 4);
+//        System.out.println(r);
 
         Parser parser=new Parser();
         parser.start(args[0]);
@@ -36,7 +42,8 @@ public class Parser {
 
     public Parser() throws FileNotFoundException {
         Gson gson=new Gson();
-        types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+        //types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+        types = new Types();
 
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())
@@ -188,6 +195,24 @@ public class Parser {
         }
 
         throw new JsonSyntaxException("Variable " + varName + " wasn't defined before.");
+    }
+
+    public static String compareTypes(String type, String nextType) throws Exception{
+        if(type != null && !type.isEmpty()){
+            if(nextType.contains("ArrayList") && type.contains("ArrayList")){
+                if(!nextType.equals(type)){
+                    throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
+                }
+                return type;
+            }else if(nextType.contains("ArrayList") ^ type.contains("ArrayList")){
+                throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
+                //TODO in case of type number and next is String. See if String is a number with regex
+            }else if(nextType.equals("String")){
+                return nextType;
+            } else if(nextType.equals("Double") && type.equals("Integer")){
+                return nextType;
+            } else return type;
+        } else return nextType;
     }
 
     public enum PrintState{
