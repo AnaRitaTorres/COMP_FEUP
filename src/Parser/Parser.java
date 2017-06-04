@@ -25,13 +25,13 @@ public class Parser {
 
     public static void main(String[] args) throws JsonParseException, FileNotFoundException {
 
-        if(args.length != 1){
+        if(args.length != 2){
             System.out.println("java Parser <jsFile>.");
             return;
         }
 
         Parser parser=new Parser();
-        parser.start(args[0]);
+        parser.start(args[0],args[1]);
     }
 
     public Parser() throws FileNotFoundException {
@@ -43,15 +43,28 @@ public class Parser {
             directory.mkdir();
     }
 
-    public void start(String jsFile){
-        try {
-            String jsonPath = Esprima.readJS2JSON(jsFile);
-            readEsprima(jsonPath);
-            ParserUt.getInstance().printFile();
-        } catch (JsonSyntaxException e){
-            System.err.println(e.getMessage());
-        } catch (ScriptException | IOException | NoSuchMethodException e) {
-            e.printStackTrace();
+    public void start(String jsFile, String jsonFile){
+        if(jsonFile.isEmpty()){
+            try {
+                String jsonPath = Esprima.readJS2JSON(jsFile);
+                readEsprima(jsonPath);
+                ParserUt.getInstance().printFile();
+            } catch (JsonSyntaxException e) {
+                System.err.println(e.getMessage());
+            } catch (ScriptException | IOException | NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
+        else{
+            try {
+                Gson gson=new Gson();
+                types=gson.fromJson(new FileReader(jsonFile), Types.class);
+                ParserUt.getInstance().printFile();
+            } catch (JsonSyntaxException e) {
+                System.err.println(e.getMessage());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -1,8 +1,6 @@
 package Gui;
 
-import Esprima.rhino.Esprima;
 import Parser.ParserUt;
-import javax.script.ScriptException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +32,7 @@ public class Interface extends JFrame implements ActionListener{
 
     private JOptionPane inputInvalid=null;
 
+    private boolean json=false;
     private Parser parser=null;
 
     public Interface() throws FileNotFoundException {
@@ -106,13 +105,13 @@ public class Interface extends JFrame implements ActionListener{
 
             if(javascriptTextArea.getText().length()==0){
                 inputInvalid.showMessageDialog(this,
-                        "Input is Empty","Warning",
+                        "Input is Empty!","Warning",
                         JOptionPane.WARNING_MESSAGE);
             }
             else if(lines.length!=0){
                 try {
                     writeFile(lines);
-                    parser.start("userInput.js");
+                    parser.start("userInput.js","");
 
                     javaTextArea.setText(ParserUt.getInstance().printFile());
                     ParserUt.getInstance().resetString();
@@ -129,21 +128,31 @@ public class Interface extends JFrame implements ActionListener{
             javascriptTextArea.setText("");
             chooseFile("resources/JSFiles/userFile.js");
 
-            parser.start("userInput.js");
+            if(json)
+                parser.start("userFile.js", "types.json");
+            else
+                parser.start("userFile.js","");
 
             javaTextArea.setText(ParserUt.getInstance().printFile());
             ParserUt.getInstance().resetString();
 
         }
         else if(actionEvent.getSource() == chooseJsonFileButton){
-            chooseFile("resources/JSONFiles/userJson.json");
-
+            chooseFile("resources/JSONFiles/types.json");
+            chooseJSFileButton.setEnabled(true);
+            json=true;
         }
         else if(actionEvent.getSource() == jsonButton){
-            if(jsonButton.isSelected())
+            if(jsonButton.isSelected()) {
                 chooseJsonFileButton.setVisible(true);
-            else
+                chooseJSFileButton.setEnabled(false);
+                runButton.setEnabled(false);
+            }
+            else {
                 chooseJsonFileButton.setVisible(false);
+                chooseJSFileButton.setEnabled(true);
+                runButton.setEnabled(true);
+            }
         }
     }
 
@@ -192,7 +201,7 @@ public class Interface extends JFrame implements ActionListener{
         }
 
         BufferedReader in = null;
-        if(fileWasSelected) {
+        if(fileWasSelected && media.getPath()=="resources/JSFiles/userFile.js") {
             try {
                 in = new BufferedReader(new FileReader(media));
                 String str;
@@ -207,6 +216,9 @@ public class Interface extends JFrame implements ActionListener{
                 } catch (Exception ex) {
                 }
             }
+        }
+        else if (fileWasSelected && media.getPath()=="resources/JSONFiles/types.json"){
+
         }
 
 
