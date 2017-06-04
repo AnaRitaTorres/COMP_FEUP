@@ -25,7 +25,7 @@ function User(name,age){
 
     while(bull <goat){ //é preciso tratar depois dos espaços para ficar o código alinhado no ficheiro java
         if(bull<goat){
-            ola="ola";
+           var ola="ola";
         }
     }
 
@@ -37,7 +37,7 @@ var k=0;
 function main(){
     switch(puma){
         case 1:
-            x=2;
+            var x=1;
             break;
         default:
             break;

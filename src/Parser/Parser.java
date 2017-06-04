@@ -25,7 +25,7 @@ public class Parser {
 
     public static void main(String[] args) throws JsonParseException, FileNotFoundException {
 
-        if(args.length != 2){
+        if(args.length != 1){
             System.out.println("java Parser <jsFile>.");
             return;
         }
@@ -37,17 +37,17 @@ public class Parser {
 //        System.out.println(r);
 
         Parser parser=new Parser();
-        parser.start(args[0],args[1]);
+        parser.start(args[0],"");
     }
 
     public Parser() throws FileNotFoundException {
-        Gson gson=new Gson();
-        //types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
-        types = new Types();
-
         File directory = new File("resources/JSONFiles");
         if(!directory.exists())
             directory.mkdir();
+
+        Gson gson=new Gson();
+        //types=gson.fromJson(new FileReader("resources/JSONFiles/types.json"),Types.class);
+        types = new Types();
     }
 
     public void start(String jsFile, String jsonFile){

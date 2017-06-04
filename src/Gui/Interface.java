@@ -201,7 +201,7 @@ public class Interface extends JFrame implements ActionListener{
         }
 
         BufferedReader in = null;
-        if(fileWasSelected && media.getPath()=="resources/JSFiles/userFile.js") {
+        if(fileWasSelected && media.getPath().equals("resources/JSFiles/userFile.js")) {
             try {
                 in = new BufferedReader(new FileReader(media));
                 String str;
@@ -217,7 +217,7 @@ public class Interface extends JFrame implements ActionListener{
                 }
             }
         }
-        else if (fileWasSelected && media.getPath()=="resources/JSONFiles/types.json"){
+        else if (fileWasSelected && media.getPath().equals("resources/JSONFiles/types.json")){
 
         }
 
