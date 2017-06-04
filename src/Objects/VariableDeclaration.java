@@ -19,7 +19,7 @@ public class VariableDeclaration extends Expression {
         if(ParserUt.getInstance().getPrintState()== Parser.PrintState.GLOBAL_VARIABLES){
             ParserUt.getInstance().writeToBuffer("private "+kind+" ");
         } else if(ParserUt.getInstance().getInFunction()){
-            ParserUt.getInstance().writeToBuffer(kind+" ");
+            ParserUt.getInstance().writeToBuffer(kind +" ");
         } else {
             ParserUt.getInstance().writeToBuffer("//Variables can only be declared inside functions.\n\n");
             return;

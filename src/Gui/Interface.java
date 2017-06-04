@@ -97,6 +97,7 @@ public class Interface extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        String javaCode=null;
 
         if (actionEvent.getSource() == runButton){
 
@@ -111,11 +112,9 @@ public class Interface extends JFrame implements ActionListener{
             else if(lines.length!=0){
                 try {
                     writeFile(lines);
-                    parser.start("userInput.js","");
+                    javaCode=parser.start("userInput.js",null);
 
-                    javaTextArea.setText(ParserUt.getInstance().printFile());
-                    ParserUt.getInstance().resetString();
-
+                    javaTextArea.setText(javaCode);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -126,15 +125,16 @@ public class Interface extends JFrame implements ActionListener{
 
             javaTextArea.setText("");
             javascriptTextArea.setText("");
-            chooseFile("resources/JSFiles/userFile.js");
+            boolean chooseFile=chooseFile("resources/JSFiles/userFile.js");
 
-            if(json)
-                parser.start("userFile.js", "types.json");
-            else
-                parser.start("userFile.js","");
+            if(chooseFile){
+                if(json)
+                    javaCode=parser.start("userFile.js", "types.json");
+                else
+                    javaCode=parser.start("userFile.js",null);
 
-            javaTextArea.setText(ParserUt.getInstance().printFile());
-            ParserUt.getInstance().resetString();
+                javaTextArea.setText(javaCode);
+            }
 
         }
         else if(actionEvent.getSource() == chooseJsonFileButton){
@@ -171,7 +171,7 @@ public class Interface extends JFrame implements ActionListener{
         bw.close();
     }
 
-    public void chooseFile(String path){
+    public boolean chooseFile(String path){
         JFileChooser fc = new JFileChooser();
         File media = null;
         boolean fileWasSelected=false;
@@ -221,7 +221,7 @@ public class Interface extends JFrame implements ActionListener{
 
         }
 
-
+        return fileWasSelected;
     }
 
     public static void main(String[] args) throws FileNotFoundException {

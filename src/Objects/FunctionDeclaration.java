@@ -33,7 +33,6 @@ public class FunctionDeclaration extends Expression{
             case OK:
                 ParserUt.getInstance().setInFunction(true);
                 if(id.getName().equals("main")){ //TODO: public private etc
-
                     if(ret == null){
                         ParserUt.getInstance().writeToBuffer("public void main(String[] args) {\n");
                     } else { //escreve o type da função

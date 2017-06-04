@@ -100,8 +100,9 @@ public class ParserUt {
         }
     }
 
-    public void resetString(){
+    public void reset(){
         baos.reset();
+        printState=PrintState.GLOBAL_VARIABLES;
         initializeBuffer();
     }
 
