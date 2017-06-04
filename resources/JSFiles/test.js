@@ -4,7 +4,7 @@ var lion = 8-2;
 var tuna = 125+3;
 var bear = "hello" + " world";
 var lynx = "my number is " + 4;
-var puma = (3 + 3)*4;
+var puma = (3 + 3)*(4+3+(2-1))
 var frog = [1,2,3,4];
 var fish = "babe";
 var b=new user(1,2,3);
@@ -29,7 +29,7 @@ function User(name,age){
         }
     }
 
-    return line;
+    return bull<goat;
 }
 
 var k=0;
@@ -41,6 +41,10 @@ function main(){
             break;
         default:
             break;
+    }
+
+    if(puma>0 && (puma<0 || 1>2)){
+        var a=1;
     }
 
     for(var i=1;i < 4;i++){

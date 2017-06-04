@@ -30,7 +30,8 @@ public enum MyClass {
     CALLEXPRESSION(CallExpression.class),
     RETURNSTATEMENT(ReturnStatement.class),
     TRYSTATEMENT(TryStatement.class),
-    CATCHCLAUSE(CatchClause.class);
+    CATCHCLAUSE(CatchClause.class),
+    LOGICALEXPRESSION(LogicalExpression.class);
 
     public Class<?> myClass;
 

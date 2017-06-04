@@ -32,9 +32,23 @@ public class BinaryExpression extends Expression {
             right.print(type);
             ParserUt.getInstance().writeToBuffer(")");
         }else {
-            left.print();
-            ParserUt.getInstance().writeToBuffer(" " + operator + " ");
-            right.print();
+            if(left.getType().equals("BinaryExpression")){
+                ParserUt.getInstance().writeToBuffer("(");
+                left.print();
+                ParserUt.getInstance().writeToBuffer(") " + operator + " ");
+            } else{
+                left.print();
+                ParserUt.getInstance().writeToBuffer(" " + operator + " ");
+            }
+
+            if(right.getType().equals("BinaryExpression")){
+                ParserUt.getInstance().writeToBuffer("(");
+                right.print();
+                ParserUt.getInstance().writeToBuffer(")");
+            }
+            else {
+                right.print();
+            }
         }
     }
 
