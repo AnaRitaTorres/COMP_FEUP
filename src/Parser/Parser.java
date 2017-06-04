@@ -14,30 +14,23 @@ import gsonfire.GsonFireBuilder;
 import gsonfire.PostProcessor;
 import gsonfire.PreProcessor;
 
-import javax.script.ScriptException;
-
 public class Parser {
 
     public static ArrayList<HashMap<String, String>> variables = new ArrayList<>();
-    public static String varToAnalyze;
-    public static boolean infer = false;
-    public static Types types;
+    private static ArrayList<String> returns = new ArrayList<>();
+    static Types types;
 
     public static void main(String[] args) throws JsonParseException, FileNotFoundException {
 
-        if(args.length != 1){
-            System.out.println("java Parser <jsFile>.");
+        if(args.length > 2 && args.length < 1){
+            System.out.println("java Parser <jsFile> optional:<jsonFile>");
             return;
         }
-//        ArrayList<ArrayList<ArrayList<Integer>>> r = new ArrayList<>();
-//        r.set(0, new ArrayList<>(3));
-//        r.get(0).add(new ArrayList<>(Arrays.asList(0)));
-//        System.out.println(r);
-//        r.get(0).get(0).set(0, 4);
-//        System.out.println(r);
 
         Parser parser=new Parser();
-        parser.start(args[0],null);
+        if(args.length == 2)
+            parser.start(args[0],args[1]);
+        else parser.start(args[0], null);
     }
 
     public Parser() throws FileNotFoundException {
@@ -45,11 +38,11 @@ public class Parser {
         if(!directory.exists())
             directory.mkdir();
 
-        //types = new Types();
+        types = new Types();
     }
 
     public String start(String jsFile, String jsonFile){
-        if(jsonFile!=null) {
+        if(jsonFile!=null && !jsonFile.isEmpty()) {
             try {
                 Gson gson=new Gson();
                 types=gson.fromJson(new FileReader(jsonFile), Types.class);
@@ -70,16 +63,13 @@ public class Parser {
         return javaCode;
     }
 
-    public static void readEsprima(String json) {
+    private static void readEsprima(String json) {
 
         GsonFireBuilder fireBuilder = new GsonFireBuilder()
                 .registerPostProcessor(BlockStatement.class, new PostProcessor<BlockStatement>() {
                     @Override
                     public void postDeserialize(BlockStatement result, JsonElement src, Gson gson) {
                         HashMap <String, String> map = variables.get(variables.size()-1);
-//                        for (String key: map.keySet()){
-//                            System.out.println(map.get(key) + " " + key);
-//                        }
                         result.setVariables(map);
                         variables.remove(variables.size()-1);
                     }
@@ -96,40 +86,14 @@ public class Parser {
                     }
                 })
 
-
-                .registerPostProcessor(ReturnStatement.class, new PostProcessor<ReturnStatement>() {
-                    @Override
-                    public void postDeserialize(ReturnStatement result, JsonElement src, Gson gson) {
-                        HashMap <String, String> map = variables.get(variables.size()-1);
-//                        for (String key: map.keySet()){
-//                            System.out.println(map.get(key) + " " + key);
-//                        }
-                        //result.setVariables(map);
-                        variables.remove(variables.size()-1);
-                    }
-
-                    @Override
-                    public void postSerialize(JsonElement result, ReturnStatement src, Gson gson) {
-
-                    }
-                })
-                .registerPreProcessor(ReturnStatement.class, new PreProcessor<ReturnStatement>() {
-                    @Override
-                    public void preDeserialize(Class<? extends ReturnStatement> clazz, JsonElement src, Gson gson) {
-                        variables.add(new HashMap<>());
-                    }
-                })
-
-
                 .registerPostProcessor(FunctionDeclaration.class, new PostProcessor<FunctionDeclaration>() {
                     @Override
                     public void postDeserialize(FunctionDeclaration result, JsonElement src, Gson gson) {
-                        HashMap <String, String> map = variables.get(variables.size()-1);
-//                        for (String key: map.keySet()){
-//                            System.out.println(map.get(key) + " " + key);
-//                        }
-                        //result.setVariables(map);
                         variables.remove(variables.size()-1);
+                        String ret = returns.get(returns.size()-1);
+                        if(ret.isEmpty()) ret = "void";
+                        result.setReturn(ret);
+                        returns.remove(returns.size()-1);
                     }
 
                     @Override
@@ -141,6 +105,21 @@ public class Parser {
                     @Override
                     public void preDeserialize(Class<? extends FunctionDeclaration> clazz, JsonElement src, Gson gson) {
                         variables.add(new HashMap<>());
+                        returns.add("");
+                        JsonArray args = src.getAsJsonObject().getAsJsonArray("params");
+                        String functionName = src.getAsJsonObject().getAsJsonObject("id").get("name").getAsString();
+                        try {
+                            ArrayList<String> argsTypes = types.getTypeArgumentFunction(functionName, args.size());
+                            if(argsTypes != null) {
+                                for (int i = 0; i < argsTypes.size(); i++) {
+                                    String argName = args.get(i).getAsJsonObject().get("name").getAsString();
+                                    String type = argsTypes.get(i);
+                                    addVar(argName, type);
+                                }
+                            }
+                        } catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 })
 
@@ -183,7 +162,7 @@ public class Parser {
         }
     }
 
-    public static void addVar(String var, String type) throws JsonSyntaxException{
+    static void addVar(String var, String type) throws JsonSyntaxException{
         HashMap<String, String> last = variables.get(variables.size()-1);
         String oldType = last.get(var);
         if(oldType != null)
@@ -205,7 +184,7 @@ public class Parser {
         throw new JsonSyntaxException("Variable " + varName + " wasn't defined before.");
     }
 
-    public static String compareTypes(String type, String nextType) throws Exception{
+    static String compareTypes(String type, String nextType) throws Exception{
         if(type != null && !type.isEmpty()){
             if(nextType.contains("ArrayList") && type.contains("ArrayList")){
                 if(!nextType.equals(type)){
@@ -214,13 +193,37 @@ public class Parser {
                 return type;
             }else if(nextType.contains("ArrayList") ^ type.contains("ArrayList")){
                 throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
-                //TODO in case of type number and next is String. See if String is a number with regex
             }else if(nextType.equals("String")){
                 return nextType;
             } else if(nextType.equals("Double") && type.equals("Integer")){
                 return nextType;
             } else return type;
         } else return nextType;
+    }
+
+    static String compareVarTypes(String type, String nextType) throws Exception{
+        if(!type.isEmpty()) {
+            if (type.equals(nextType)) return type;
+            if ((type.equals("int") && nextType.equals("double"))
+                    || type.equals("double") && nextType.equals("int")) {
+                return "double";
+            } else {
+                throw new Exception("Trying to save incompatible return types in same function");
+            }
+        }else {
+            return nextType;
+        }
+    }
+
+    static void saveReturn(String returnType) throws Exception{
+
+        String ret = returns.get(returns.size()-1);
+        try {
+            ret = compareVarTypes(ret, returnType);
+            returns.set(returns.size()-1, ret);
+        }catch(Exception e){
+            throw new Exception("Trying to return incompatible return types in same function");
+        }
     }
 
     public enum PrintState{

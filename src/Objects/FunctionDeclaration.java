@@ -15,7 +15,11 @@ public class FunctionDeclaration extends Expression{
     private Boolean generator; //ainda nao sei para que serve
     private Boolean expression; //ainda não sei para qe serve
     private FunctionState State;
-    private ReturnStatement ret;
+    private String ret;
+
+    public void setReturn(String ret) {
+        this.ret = ret;
+    }
 
     public void print(){
         if(ParserUt.getInstance().getPrintState()==Parser.PrintState.GLOBAL_VARIABLES){
@@ -36,8 +40,8 @@ public class FunctionDeclaration extends Expression{
                     if(ret == null){
                         ParserUt.getInstance().writeToBuffer("public void main(String[] args) {\n");
                     } else { //escreve o type da função
-                        ParserUt.getInstance().writeToBuffer("public ");
-                        ret.printType();
+                        ParserUt.getInstance().writeToBuffer("public " + ret + " ");
+
                         ParserUt.getInstance().writeToBuffer(" main(String[] args) {\n");
                     }
 
@@ -48,8 +52,7 @@ public class FunctionDeclaration extends Expression{
                         ParserUt.getInstance().writeToBuffer("public void "); //é preciso verificar o type da função
                     }
                     else {
-                        ParserUt.getInstance().writeToBuffer("public ");
-                        ret.printType();
+                        ParserUt.getInstance().writeToBuffer("public " + ret + " ");
                         ParserUt.getInstance().writeToBuffer(" ");
                     }
                     id.print();
@@ -93,7 +96,7 @@ public class FunctionDeclaration extends Expression{
     private void getParamsTypes(){
         Types tmpTypes=Parser.getTypes();
         try{
-            typesParams=tmpTypes.getTypeArgumentFunction(id.getName(),params);
+            typesParams=tmpTypes.getTypeArgumentFunction(id.getName(),params.size());
             if(typesParams!=null){
                 State=FunctionState.OK;
             }else

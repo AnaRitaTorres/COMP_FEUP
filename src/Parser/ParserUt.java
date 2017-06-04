@@ -3,6 +3,9 @@ package Parser;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import Parser.Parser.PrintState;
 
 public class ParserUt {
@@ -10,6 +13,7 @@ public class ParserUt {
     private ByteArrayOutputStream baos;
     private static ParserUt instance=null;
     private static Parser.PrintState printState= Parser.PrintState.GLOBAL_VARIABLES;
+    private static ArrayList<String> logicals = new ArrayList<>(Arrays.asList("<", "<=", ">", ">=", "==", "!=", "&&", "||", "!"));
     private boolean inFunction=false;
 
     protected ParserUt(){
@@ -17,6 +21,8 @@ public class ParserUt {
         baos=new ByteArrayOutputStream();
         initializeBuffer();
     }
+
+
 
     public static ParserUt getInstance(){
         if(instance==null){
@@ -26,7 +32,7 @@ public class ParserUt {
         return instance;
     }
 
-    public void initializeBuffer(){
+    private void initializeBuffer(){
         try {
             baos.write("public class MainClass {\n".getBytes());
             addNumSpaces();
@@ -48,7 +54,7 @@ public class ParserUt {
     public void printSpaces(){
         try{
             for(int i=0;i<numSpaces;i++){
-                baos.write("    ".getBytes());
+                baos.write("\t".getBytes());
             }
         }catch(IOException e){
             e.printStackTrace();
@@ -69,7 +75,7 @@ public class ParserUt {
         baos.write(tmpBuffer.getBytes(),0,tmpBuffer.length()-numCharacters);
     }
 
-    public String printFile(){
+    String printFile(){
         try {
             if(printState!=PrintState.MAIN){
                 baos.reset();
@@ -90,7 +96,7 @@ public class ParserUt {
         String[] parts=reverseBuffer.split("[(]",2);
         String first="("+new StringBuilder(parts[0]).reverse().toString();
         String second=new StringBuilder(parts[1]).reverse().toString();
-        first=first.replaceAll("    ","");
+        first=first.replaceAll("\t","");
         baos.reset();
         try {
             baos.write(second.getBytes());
@@ -100,7 +106,7 @@ public class ParserUt {
         }
     }
 
-    public void reset(){
+    void reset(){
         baos.reset();
         printState=PrintState.GLOBAL_VARIABLES;
         initializeBuffer();
@@ -120,5 +126,9 @@ public class ParserUt {
 
     public void setPrintState(PrintState state){
         printState=state;
+    }
+
+    boolean isLogicalOperator(String operator){
+        return logicals.contains(operator);
     }
 }

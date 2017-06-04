@@ -2,7 +2,6 @@ package Parser;
 import Nodes.BasicNode;
 import Objects.*;
 import com.google.gson.*;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -54,27 +53,12 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                 case "CallExpression":
                     analyzeFunction(jsonObj);
                     break;
-                /*case "ReturnStatement":
+                case "ReturnStatement":
                     JsonObject arg = jsonObj.getAsJsonObject("argument");
-                    varType = inferType(arg);*/
-                case "FunctionDeclaration":
-                    id = jsonObj.getAsJsonObject("id");
-                    JsonObject body = jsonObj.getAsJsonObject("body");
-                    //ParserUt.getInstance().writeToBuffer(body.getAsString());
-                    //JsonObject retObj = body.getAsJsonObject("ReturnStatement");
-                    //String sret = retObj.getAsString();
-                    //ParserUt.getInstance().writeToBuffer(sret);
-
-                    //JsonObject Btype = body.getAsJsonArray().get("type").getAsJsonObject();
-
-                    //ParserUt.getInstance().writeToBuffer(Btype.getAsString());
-                    //JsonObject arg = retObj.get("argument").getAsJsonObject();
-                    //arg.getAsJsonObject("type");
-
-                    //varType = inferType(arg.getAsJsonObject());
-                   // ReturnStatement ret = new ReturnStatement();
-                    //ret.setArgType(varType);
-
+                    varType = inferType(arg);
+                    Parser.saveReturn(varType);
+                    break;
+                default: break;
             }
 
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic deserialization.
@@ -98,8 +82,6 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         }
         System.out.println(args);
         Parser.types.addFunction(functionName, args);
-        //TODO check if defined and pass the arguments types
-
     }
 
     private String inferType(JsonObject jsonObj) throws Exception{
@@ -151,7 +133,9 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         String right = inferType(jsonObj.getAsJsonObject("right"));
         String left = inferType(jsonObj.getAsJsonObject("left"));
         String operator = jsonObj.get("operator").getAsString();
-        if(right.equals("String") || left.equals("String")){
+        if(ParserUt.getInstance().isLogicalOperator(operator)){
+            varType = "boolean";
+        }else if(right.equals("String") || left.equals("String")){
             if(operator.equals("+")){
                 varType = "String";
             }else{

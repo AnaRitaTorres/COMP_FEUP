@@ -28,7 +28,7 @@ public class Types {
                     throw new Exception("Can't call functions with different types of parameters");
                 }
                 for (int j = 0; j < params.size(); j++) {
-                    modified.add(Parser.compareTypes(args.get(i), params.get(i)));
+                    modified.add(Parser.compareVarTypes(args.get(i), params.get(i)));
 
                 }
                 functions.get(i).setArgs(modified);
@@ -47,7 +47,7 @@ public class Types {
 
     }
 
-    public ArrayList<String> getTypeArgumentFunction(String functionName,ArrayList<Identifier> argument) throws Exception {
+    public ArrayList<String> getTypeArgumentFunction(String functionName, int argSize) throws Exception {
         ArrayList<String> tmpArgs=null;
         for(int i=0;i<functions.size();i++){
             FunctionsTypes tmpFt=functions.get(i);
@@ -61,7 +61,7 @@ public class Types {
             return null;
         }
 
-        if(tmpArgs.size()==argument.size()){
+        if(tmpArgs.size() == argSize){
             return tmpArgs;
         }
         else
