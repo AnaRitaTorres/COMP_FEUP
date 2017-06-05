@@ -188,9 +188,13 @@ public class Parser {
     static void addVar(String var, String type) throws JsonSyntaxException{
         HashMap<String, String> last = variables.get(variables.size()-1);
         String oldType = last.get(var);
-        String newType = compareVarTypes(oldType, type);
-        last.put(var, newType);
-        variables.set(variables.size()-1, last);
+        try {
+            String newType = compareVarTypes(oldType, type);
+            last.put(var, newType);
+            variables.set(variables.size() - 1, last);
+        }catch (JsonSyntaxException e){
+            throw new JsonSyntaxException("Trying to redefine variable " + var + " from " + oldType + " to " + type);
+        }
     }
     
     static boolean existsInScope(String var){
@@ -262,7 +266,7 @@ public class Parser {
             ret = compareVarTypes(ret, returnType);
             returns.set(returns.size()-1, ret);
         }catch(Exception e){
-            throw new JsonSyntaxException("Trying to return incompatible return types in same function");
+            throw new JsonSyntaxException("Trying to return incompatible return types in same function: " + returnType + " and " + ret);
         }
     }
 
