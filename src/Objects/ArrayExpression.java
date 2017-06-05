@@ -9,13 +9,6 @@ public class ArrayExpression extends Expression {
 
     private ArrayList<Expression> elements;
 
-    private ArrayExpression(){}
-
-    public void print() {
-
-
-    }
-
     public void print(String type){
         ParserUt.getInstance().writeToBuffer("new ArrayList<>(");
 

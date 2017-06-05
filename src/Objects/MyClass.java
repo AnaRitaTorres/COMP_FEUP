@@ -31,7 +31,8 @@ public enum MyClass {
     RETURNSTATEMENT(ReturnStatement.class),
     TRYSTATEMENT(TryStatement.class),
     CATCHCLAUSE(CatchClause.class),
-    LOGICALEXPRESSION(LogicalExpression.class);
+    LOGICALEXPRESSION(LogicalExpression.class),
+    LABELEDSTATEMENT(LabeledStatement.class);
 
     public Class<?> myClass;
 

@@ -11,10 +11,6 @@ public class Root {
     private ArrayList<BasicNode> body;
     private HashMap<String, String> variables;
 
-    public Root(){
-
-    }
-
     public void print(){
         Parser.variables.add(variables);
         System.out.println("type: " + type);

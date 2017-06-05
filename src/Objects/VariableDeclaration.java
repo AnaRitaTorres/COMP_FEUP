@@ -11,8 +11,6 @@ public class VariableDeclaration extends Expression {
     private String kind;
     private ArrayList<Expression> declarations;
 
-    public VariableDeclaration(){};
-
     public void print(){
         defKind();
         ParserUt.getInstance().printSpaces();

@@ -8,8 +8,6 @@ public class VariableDeclarator extends Expression {
     private Expression id;
     private Expression init;
 
-    public VariableDeclarator(){};
-
     public void print(){
 
         id.print();

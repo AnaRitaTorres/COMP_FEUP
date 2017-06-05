@@ -11,8 +11,6 @@ public class SwitchStatement extends Expression{
     private Expression discriminant;
     private ArrayList<SwitchCase> cases;
 
-    public SwitchStatement(){}
-
     public void print(){
         ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){

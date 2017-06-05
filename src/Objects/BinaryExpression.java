@@ -8,8 +8,6 @@ public class BinaryExpression extends Expression {
     private Expression left;
     private Expression right;
 
-    public BinaryExpression(){}
-
     public void print() {
         String type="";
 

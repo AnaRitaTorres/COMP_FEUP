@@ -10,8 +10,6 @@ public class DoWhileStatement extends Expression{
     private Expression test;
     private Expression body;
 
-    private DoWhileStatement(){}
-
     public void print() {
         ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!=Parser.PrintState.GLOBAL_VARIABLES){

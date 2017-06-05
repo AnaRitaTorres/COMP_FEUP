@@ -59,4 +59,8 @@ function main(){
     console.log("1");
     console.log(bull);
     console.log(bull>goat);
+
+    ola:for(var w=0; w < 4; w++){
+            break ola;
+        }
 }

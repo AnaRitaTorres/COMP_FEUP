@@ -10,8 +10,6 @@ public class SwitchCase extends Expression{
     private Expression test;
     private ArrayList<Expression> consequent;
 
-    public SwitchCase(){}
-
     public void print(){
         ParserUt.getInstance().printSpaces();
         if(test==null){
