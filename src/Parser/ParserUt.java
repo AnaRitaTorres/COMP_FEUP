@@ -34,7 +34,7 @@ public class ParserUt {
 
     private void initializeBuffer(){
         try {
-            baos.write("public class MainClass {\n".getBytes());
+            baos.write("import java.util.*;\n\npublic class MainClass {\n".getBytes());
             addNumSpaces();
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class ParserUt {
     public void printSpaces(){
         try{
             for(int i=0;i<numSpaces;i++){
-                baos.write("\t".getBytes());
+                baos.write("    ".getBytes());
             }
         }catch(IOException e){
             e.printStackTrace();
@@ -110,7 +110,7 @@ public class ParserUt {
         String[] parts=reverseBuffer.split("[(]",2);
         String first="("+new StringBuilder(parts[0]).reverse().toString();
         String second=new StringBuilder(parts[1]).reverse().toString();
-        first=first.replaceAll("\t","");
+        first=first.replaceAll("    ","");
         baos.reset();
         try {
             baos.write(second.getBytes());
