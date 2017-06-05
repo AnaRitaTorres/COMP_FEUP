@@ -141,6 +141,13 @@ public class Parser {
                                     addVar(argName, type);
                                 }
                             }
+
+                            HashMap<String, String> vars = types.getVarsInFunction(functionName);
+                            if(vars != null){
+                                for (String var : vars.keySet()) {
+                                    addVar(var, vars.get(var));
+                                }
+                            }
                             addVar("function", functionName);
 
                         } catch (Exception e){
@@ -153,6 +160,9 @@ public class Parser {
                 .registerPreProcessor(Root.class, new PreProcessor<Root>() {
                     @Override
                     public void preDeserialize(Class<? extends Root> clazz, JsonElement src, Gson gson) {
+                        HashMap<String, String> globals = types.getGlobalVars();
+                        globals.put("function", "root");
+                        variables.add(globals);
                         variables.add(new HashMap<>());
                     }
                 })
@@ -161,7 +171,7 @@ public class Parser {
                     public void postDeserialize(Root result, JsonElement src, Gson gson) {
                         HashMap <String, String> map = variables.get(variables.size()-1);
                         result.setVariables(map);
-                        variables.remove(variables.size()-1);
+                        variables.clear();
                     }
 
                     @Override
@@ -197,16 +207,19 @@ public class Parser {
         }
     }
     
-    static boolean existsInScope(String var){
+    static String existsInScope(String var){
         for (int i = variables.size()-1; i >= 0; i--) {
             HashMap<String, String> scope = variables.get(i);
             if(scope.containsKey(var)){
-                return true;
+                if(scope.containsKey("function")){
+                    return scope.get(var);
+                }
+                return null;
             } else if(scope.containsKey("function")){
-                return false;
+                return "";
             }
         }
-        return false;
+        return "";
     }
 
     public static String getVarType(String varName) throws JsonSyntaxException{

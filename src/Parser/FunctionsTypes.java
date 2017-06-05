@@ -2,7 +2,6 @@ package Parser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class FunctionsTypes {
     private String name;
@@ -36,5 +35,9 @@ public class FunctionsTypes {
 
     public String getReturn() {
         return ret;
+    }
+
+    HashMap<String, String> getVars() {
+        return vars;
     }
 }

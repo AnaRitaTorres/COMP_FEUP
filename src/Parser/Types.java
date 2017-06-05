@@ -83,4 +83,16 @@ public class Types {
         else
             throw new Exception("Not declared all the arguments.");
     }
+
+    public HashMap<String, String> getVarsInFunction(String functionName){
+        for (int i = 0; i < functions.size(); i++) {
+            if(functions.get(i).getName().equals(functionName))
+                return functions.get(i).getVars();
+        }
+        return null;
+    }
+
+    HashMap<String, String> getGlobalVars(){
+        return vars;
+    }
 }

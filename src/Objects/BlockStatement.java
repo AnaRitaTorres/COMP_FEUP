@@ -21,4 +21,11 @@ public class BlockStatement extends Expression {
     public void setVariables(HashMap<String, String> vars){
         variables = vars;
     }
+
+    public void addVariablesFromFile(HashMap<String, String> vars){
+        for (String key : vars.keySet()) {
+            if(!variables.containsKey(key))
+                variables.put(key, vars.get(key));
+        }
+    }
 }
