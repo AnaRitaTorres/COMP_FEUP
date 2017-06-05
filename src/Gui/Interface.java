@@ -113,6 +113,17 @@ public class Interface extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent actionEvent) {
         String javaCode=null;
 
+        File dir = new File("resources/JSFiles");
+        File dir1 = new File("resources/JSONFiles");
+
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        else if(!dir1.exists()){
+            dir1.mkdirs();
+        }
+
+
         if (actionEvent.getSource() == runButton){
 
             javaTextArea.setText("");
@@ -152,6 +163,7 @@ public class Interface extends JFrame implements ActionListener{
 
         }
         else if(actionEvent.getSource() == chooseJsonFileButton){
+
             chooseFile("resources/JSONFiles/types.json");
             chooseJSFileButton.setEnabled(true);
             json=true;
@@ -190,6 +202,9 @@ public class Interface extends JFrame implements ActionListener{
         File media = null;
         boolean fileWasSelected=false;
         int result = fc.showOpenDialog(this);
+
+
+
 
         if (result == JFileChooser.APPROVE_OPTION) {
 
