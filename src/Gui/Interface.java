@@ -46,6 +46,13 @@ public class Interface extends JFrame implements ActionListener{
         javascriptNumber = new TextLineNumber(javascriptTextArea);
         javascriptScroll = new JScrollPane(javascriptTextArea);
         javascriptScroll.setRowHeaderView( javascriptNumber);
+        javascriptScroll.setBorder(
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createCompoundBorder(
+                                BorderFactory.createTitledBorder("Javascript"),
+                                BorderFactory.createEmptyBorder(5,5,5,5)),
+
+                        javascriptScroll.getBorder()));
 
         javaTextArea = new JTextArea();
         javaTextArea.setDisabledTextColor(Color.BLACK);
@@ -53,9 +60,17 @@ public class Interface extends JFrame implements ActionListener{
         javaNumber = new TextLineNumber(javaTextArea);
         javaScroll = new JScrollPane(javaTextArea);
         javaScroll.setRowHeaderView( javaNumber);
+        javaScroll.setBorder(
+                BorderFactory.createCompoundBorder(
+                        BorderFactory.createCompoundBorder(
+                                BorderFactory.createTitledBorder("Java"),
+                                BorderFactory.createEmptyBorder(5,5,5,5)),
+                        javaScroll.getBorder()));
+
 
 
         menuOptions = new JPanel();
+
         runButton = new JButton("Run");
         runButton.addActionListener(this);
 
@@ -69,12 +84,11 @@ public class Interface extends JFrame implements ActionListener{
         jsonButton = new JRadioButton("Insert Type Json File");
         jsonButton.addActionListener(this);
 
-
-
         menuOptions.add(runButton);
         menuOptions.add(chooseJSFileButton);
         menuOptions.add(chooseJsonFileButton);
         menuOptions.add(jsonButton);
+
 
         chooseJsonFileButton.setVisible(false);
 
