@@ -10,7 +10,7 @@ public class MemberExpression extends Expression{
     private Expression property;
 
     public void print() {
-        object.print();
+        object.print("");
         if(!computed){
             ParserUt.getInstance().writeToBuffer(".");
             property.print();
@@ -19,6 +19,28 @@ public class MemberExpression extends Expression{
 //        ParserUt.getInstance().writeToBuffer(".add(");
 //        property.print();
 //        ParserUt.getInstance().writeToBuffer(", ");
+    }
+
+    public void print(String type){
+        print();
+        if(computed){
+            if(!type.contains("=")){
+                ParserUt.getInstance().writeToBuffer(".get(");
+                property.print();
+                ParserUt.getInstance().writeToBuffer(")");
+            }else{
+                ParserUt.getInstance().writeToBuffer(".set(");
+                property.print();
+                ParserUt.getInstance().writeToBuffer(", ");
+                if(type.matches(".=")){
+                    object.print();
+                    ParserUt.getInstance().writeToBuffer(".get(");
+                    property.print();
+                    ParserUt.getInstance().writeToBuffer(")" + type.charAt(0));
+
+                }
+            }
+        }
     }
 
     public String getObjectName(){

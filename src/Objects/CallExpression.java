@@ -22,7 +22,7 @@ public class CallExpression  extends Expression{
                 return;
             }
         }
-        callee.print();
+        callee.print("");
         printArgs();
         ParserUt.getInstance().writeToBuffer(";\n");
 

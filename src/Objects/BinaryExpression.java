@@ -28,7 +28,7 @@ public class BinaryExpression extends Expression {
         }
 
         if(left.getType().equals("MemberExpression")){
-            left.print(type);
+            left.print(operator);
             right.print(type);
             ParserUt.getInstance().writeToBuffer(")");
         }else {
