@@ -1,0 +1,10 @@
+{
+  "vars": {},
+  "functions": [
+    {
+      "name": "User",
+      "args":["String","int"],
+      "vars": {}
+    }
+  ]
+}

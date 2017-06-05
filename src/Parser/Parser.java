@@ -117,6 +117,8 @@ public class Parser {
                                     addVar(argName, type);
                                 }
                             }
+                            addVar("function", functionName);
+
                         } catch (Exception e){
                             e.printStackTrace();
                         }
@@ -170,6 +172,18 @@ public class Parser {
             else throw new JsonSyntaxException("Cannot redefine variable type in java. Trying to change variable " + var);
         last.put(var, type);
         variables.set(variables.size()-1, last);
+    }
+    
+    static boolean existsInScope(String var){
+        for (int i = variables.size()-1; i >= 0; i--) {
+            HashMap<String, String> scope = variables.get(i);
+            if(scope.containsKey(var)){
+                return true;
+            } else if(scope.containsKey("function")){
+                return false;
+            }
+        }
+        return false;
     }
 
     public static String getVarType(String varName) throws Exception{

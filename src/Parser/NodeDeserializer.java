@@ -30,7 +30,9 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     if (value.isJsonNull()) {
                         varType = null;
                     } else varType = inferType(jsonObj.getAsJsonObject("init"));
-
+                    if(Parser.existsInScope(name)){
+                        throw new JsonSyntaxException("Variable " + name + " already defined in the scope");
+                    }
                     Parser.addVar(name, varType);
                     break;
                 case "AssignmentExpression":
