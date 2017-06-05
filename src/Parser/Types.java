@@ -47,6 +47,21 @@ public class Types {
 
     }
 
+    public String getFunctionReturn(String functionName){
+        for (int i = 0; i < functions.size(); i++) {
+            if(functions.get(i).getName().equals(functionName))
+                return functions.get(i).getReturn();
+        }
+        return "";
+    }
+
+    public void setReturn(String functionName, String ret){
+        for (int i = 0; i < functions.size(); i++) {
+            if(functions.get(i).getName().equals(functionName))
+                functions.get(i).setReturn(ret);
+        }
+    }
+
     public ArrayList<String> getTypeArgumentFunction(String functionName, int argSize) throws Exception {
         ArrayList<String> tmpArgs=null;
         for(int i=0;i<functions.size();i++){

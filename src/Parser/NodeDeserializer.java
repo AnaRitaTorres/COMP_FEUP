@@ -56,9 +56,14 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                     analyzeFunction(jsonObj);
                     break;
                 case "ReturnStatement":
-                    JsonObject arg = jsonObj.getAsJsonObject("argument");
-                    varType = inferType(arg);
-                    Parser.saveReturn(varType);
+                    try {
+                        JsonObject arg = jsonObj.getAsJsonObject("argument");
+                        varType = inferType(arg);
+                        Parser.saveReturn(varType);
+                    } catch(ClassCastException e){
+                        Parser.saveReturn("void");
+                    }
+
                     break;
                 default: break;
             }
@@ -111,6 +116,11 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                 String arrayType = analyzeArray(array);
                 varType += arrayType + ">";
                 break;
+            case "CallExpression":
+                name = jsonObj.getAsJsonObject("callee").get("name").getAsString();
+                String ret = Parser.types.getFunctionReturn(name);
+                varType = ret;
+                break;
         }
         return varType;
     }
@@ -143,8 +153,8 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             }else{
                 throw new Exception("String operations in Java are \"+\" only");
             }
-        }else if(right.equals("long") || left.equals("long")){
-            varType = "long";
+        }else if(right.equals("double") || left.equals("double")){
+            varType = "double";
         }else{
             varType = "int";
         }

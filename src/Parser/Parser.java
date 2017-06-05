@@ -88,11 +88,23 @@ public class Parser {
 
                 .registerPostProcessor(FunctionDeclaration.class, new PostProcessor<FunctionDeclaration>() {
                     @Override
-                    public void postDeserialize(FunctionDeclaration result, JsonElement src, Gson gson) {
+                    public void postDeserialize(FunctionDeclaration result, JsonElement src, Gson gson){
                         variables.remove(variables.size()-1);
                         String ret = returns.get(returns.size()-1);
+                        String name = src.getAsJsonObject().getAsJsonObject("id").get("name").getAsString();
+                        JsonArray params = src.getAsJsonObject().getAsJsonArray("params");
                         if(ret.isEmpty()) ret = "void";
                         result.setReturn(ret);
+                        ArrayList<String> par = new ArrayList<>();
+                        for (int i = 0; i < params.size(); i++) {
+                            par.add("");
+                        }
+                        try {
+                            types.addFunction(name, par);
+                            types.setReturn(name, ret);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                         returns.remove(returns.size()-1);
                     }
 
@@ -187,7 +199,7 @@ public class Parser {
     }
 
     public static String getVarType(String varName) throws Exception{
-        String type;
+
         for (int i = variables.size()-1; i >= 0; i--) {
             HashMap<String, String> scope = variables.get(i);
             if(scope.containsKey(varName)){
@@ -216,6 +228,7 @@ public class Parser {
     }
 
     static String compareVarTypes(String type, String nextType) throws Exception{
+        if(nextType.isEmpty()) return type;
         if(!type.isEmpty()) {
             if (type.equals(nextType)) return type;
             if ((type.equals("int") && nextType.equals("double"))

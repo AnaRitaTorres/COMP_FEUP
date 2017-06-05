@@ -11,7 +11,7 @@ public class ReturnStatement extends Expression {
     public void print(){
         ParserUt.getInstance().printSpaces();
         ParserUt.getInstance().writeToBuffer("return ");
-        argument.print();
+        if(argument != null) argument.print();
         ParserUt.getInstance().writeToBuffer(";\n");
     }
 }
