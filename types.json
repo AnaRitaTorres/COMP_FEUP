@@ -1,10 +1,14 @@
 {
-  "vars": {},
+  "vars": {
+      "a": "String"
+  },
   "functions": [
     {
       "name": "User",
       "args":["String","int"],
-      "vars": {},
+      "vars": {
+          "bull":"int"
+      },
 	"ret": "int"
     }
   ]

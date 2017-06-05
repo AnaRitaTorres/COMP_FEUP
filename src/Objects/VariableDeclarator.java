@@ -16,7 +16,9 @@ public class VariableDeclarator extends Expression {
             ParserUt.getInstance().writeToBuffer(" = ");
             try {
                 String type = Parser.getVarType(id.getName());
-                init.print(type);
+                if(init.getType().equals("CallExpression"))
+                    init.print();
+                else init.print(type);
             }catch(Exception e){
                 e.printStackTrace();
             }
