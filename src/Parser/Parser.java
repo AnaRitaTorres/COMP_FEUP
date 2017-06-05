@@ -196,6 +196,8 @@ public class Parser {
     }
 
     static void addVar(String var, String type) throws JsonSyntaxException{
+
+
         HashMap<String, String> last = variables.get(variables.size()-1);
         String oldType = last.get(var);
         try {
@@ -204,6 +206,22 @@ public class Parser {
             variables.set(variables.size() - 1, last);
         }catch (JsonSyntaxException e){
             throw new JsonSyntaxException("Trying to redefine variable " + var + " from " + oldType + " to " + type);
+        }
+    }
+
+    static void assignVar(String var, String type){
+        for (int i = variables.size()-1; i >= 0; i--) {
+            HashMap<String, String> scope = variables.get(i);
+            if(scope.containsKey(var)){
+                if(scope.containsKey("function")) break;
+                String old = scope.get(var);
+                String newType = compareVarTypes(old, type);
+                scope.put(var, newType);
+                variables.set(i, scope);
+                return;
+            } else if(scope.containsKey("function")){
+                break;
+            }
         }
     }
     

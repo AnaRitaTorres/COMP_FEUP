@@ -55,7 +55,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                         varType = "";
                     }
                     Parser.getVarType(name);
-                    Parser.addVar(name, varType);
+                    Parser.assignVar(name, varType);
                     break;
                 case "CallExpression":
                     analyzeFunction(jsonObj);
@@ -110,7 +110,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             case "AssignmentExpression":
                 JsonObject var = jsonObj.getAsJsonObject("left");
                 varType = inferType(jsonObj.getAsJsonObject("right"));
-                Parser.addVar(var.get("name").getAsString(), varType);
+                Parser.assignVar(var.get("name").getAsString(), varType);
                 break;
             case "ArrayExpression":
                 varType = "ArrayList<";

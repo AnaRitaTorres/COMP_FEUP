@@ -23,15 +23,15 @@ public class VariableDeclaration extends Expression {
                 ParserUt.getInstance().writeToBuffer("//Variables can only be declared inside functions.\n\n");
                 return;
             }
+            for (int i = 0; i < declarations.size(); i++) {
+                declarations.get(i).print();
+                ParserUt.getInstance().writeToBuffer(";\n");
+            }
         }else{
             ParserUt.getInstance().writeToBuffer("//The variable " + declarations.get(0).getId().getName() + " is not defined in the code or in the additional json.\n\n");
 
         }
 
-        for (int i = 0; i < declarations.size(); i++) {
-            declarations.get(i).print();
-            ParserUt.getInstance().writeToBuffer(";\n");
-        }
     }
 
     public void defKind(){
