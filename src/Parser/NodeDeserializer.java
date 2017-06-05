@@ -73,12 +73,10 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             return jsonDeserializationContext.deserialize(jsonElement, classToUse); // automatic deserialization.
         } catch (JsonSyntaxException e){
             throw new JsonSyntaxException(e.getMessage());
-        } catch (Exception e) {
-            throw new JsonParseException(e);
         }
     }
 
-    private void analyzeFunction(JsonObject jsonObj) throws Exception{
+    private void analyzeFunction(JsonObject jsonObj) throws JsonSyntaxException{
         JsonArray arguments = jsonObj.getAsJsonArray("arguments");
         JsonObject callee = jsonObj.getAsJsonObject("callee");
         if(!callee.get("type").getAsString().equals("Identifier")) return;
@@ -89,11 +87,10 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             String type = inferType(element);
             args.add(type);
         }
-        System.out.println(args);
         Parser.types.addFunction(functionName, args);
     }
 
-    private String inferType(JsonObject jsonObj) throws Exception{
+    private String inferType(JsonObject jsonObj) throws JsonSyntaxException{
         String type = jsonObj.get("type").getAsString();
         String varType = null;
         switch(type){
@@ -123,11 +120,15 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                 String ret = Parser.types.getFunctionReturn(name);
                 varType = ret;
                 break;
+            case "NewExpression":
+                name = jsonObj.getAsJsonObject("callee").get("name").getAsString();
+                varType = name;
+                break;
         }
         return varType;
     }
 
-    private String analyzeArray(JsonArray array) throws Exception{
+    private String analyzeArray(JsonArray array) throws JsonSyntaxException{
         String type = "";
 
         for (int i = 0; i < array.size(); i++) {
@@ -142,7 +143,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         return type;
     }
 
-    private String inferBinary(JsonObject jsonObj) throws Exception{
+    private String inferBinary(JsonObject jsonObj) throws JsonSyntaxException{
         String varType;
         String right = inferType(jsonObj.getAsJsonObject("right"));
         String left = inferType(jsonObj.getAsJsonObject("left"));
@@ -153,7 +154,7 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
             if(operator.equals("+")){
                 varType = "String";
             }else{
-                throw new Exception("String operations in Java are \"+\" only");
+                throw new JsonSyntaxException("String operations in Java are \"+\" only");
             }
         }else if(right.equals("double") || left.equals("double")){
             varType = "double";

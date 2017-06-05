@@ -92,12 +92,9 @@ public class ParserUt {
         baos.write(tmpBuffer.getBytes(),0,tmpBuffer.length()-numCharacters);
     }
 
-    String printFile(){
+    String printFile(boolean success){
         try {
-            if(printState!=PrintState.MAIN){
-                baos.reset();
-                baos.write("//Main function doesn't exists.".getBytes());
-            } else {
+            if(success) {
                 subNumSpaces();
                 baos.write("}\n".getBytes());
             }
@@ -147,5 +144,9 @@ public class ParserUt {
 
     boolean isLogicalOperator(String operator){
         return logicals.contains(operator);
+    }
+
+    public void eraseBuffer(){
+        baos.reset();
     }
 }

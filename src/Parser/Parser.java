@@ -14,6 +14,8 @@ import gsonfire.GsonFireBuilder;
 import gsonfire.PostProcessor;
 import gsonfire.PreProcessor;
 
+import javax.script.ScriptException;
+
 public class Parser {
 
     public static ArrayList<HashMap<String, String>> variables = new ArrayList<>();
@@ -51,14 +53,24 @@ public class Parser {
             }
         }
 
+
+        String javaCode;
         try {
             String jsonPath = Esprima.readJS2JSON(jsFile);
             readEsprima(jsonPath);
+            javaCode=ParserUt.getInstance().printFile(true);
+        } catch (ScriptException e){
+            ParserUt.getInstance().eraseBuffer();
+            ParserUt.getInstance().writeToBuffer("There is a syntax error in your code.\n" + e.getLocalizedMessage());
+            javaCode=ParserUt.getInstance().printFile(false);
         } catch (Exception e) {
-            e.printStackTrace();
+            ParserUt.getInstance().eraseBuffer();
+            ParserUt.getInstance().writeToBuffer("Error parsing from JS to Java.\n" + e.getMessage());
+            javaCode=ParserUt.getInstance().printFile(false);
+
+
         }
 
-        String javaCode=ParserUt.getInstance().printFile();
         ParserUt.getInstance().reset();
         return javaCode;
     }
@@ -148,9 +160,6 @@ public class Parser {
                     @Override
                     public void postDeserialize(Root result, JsonElement src, Gson gson) {
                         HashMap <String, String> map = variables.get(variables.size()-1);
-//                        for (String key: map.keySet()){
-//                            System.out.println(map.get(key) + " " + key);
-//                        }
                         result.setVariables(map);
                         variables.remove(variables.size()-1);
                     }
@@ -180,7 +189,6 @@ public class Parser {
         HashMap<String, String> last = variables.get(variables.size()-1);
         String oldType = last.get(var);
         String newType = compareVarTypes(oldType, type);
-//            else throw new JsonSyntaxException("Cannot redefine variable type in java. Trying to change variable " + var);
         last.put(var, newType);
         variables.set(variables.size()-1, last);
     }
@@ -197,7 +205,7 @@ public class Parser {
         return false;
     }
 
-    public static String getVarType(String varName) throws Exception{
+    public static String getVarType(String varName) throws JsonSyntaxException{
 
         for (int i = variables.size()-1; i >= 0; i--) {
             HashMap<String, String> scope = variables.get(i);
@@ -206,18 +214,18 @@ public class Parser {
             }
         }
 
-        throw new JsonSyntaxException("Variable " + varName + " wasn't defined before.");
+        throw new JsonSyntaxException("Variable " + varName + " wasn't defined before.\nCheck if the argument variable type is in the optional json or given a value before.");
     }
 
-    static String compareTypes(String type, String nextType) throws Exception{
+    static String compareTypes(String type, String nextType) throws JsonSyntaxException{
         if(type != null && !type.isEmpty()){
             if(nextType.contains("ArrayList") && type.contains("ArrayList")){
                 if(!nextType.equals(type)){
-                    throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
+                    throw new JsonSyntaxException("Array contains incompatible elements: " + nextType + " and " + type);
                 }
                 return type;
             }else if(nextType.contains("ArrayList") ^ type.contains("ArrayList")){
-                throw new Exception("Array contains incompatible elements: " + nextType + " and " + type);
+                throw new JsonSyntaxException("Array contains incompatible elements: " + nextType + " and " + type);
             }else if(nextType.equals("String")){
                 return nextType;
             } else if(nextType.equals("Double") && type.equals("Integer")){
@@ -247,14 +255,14 @@ public class Parser {
         }
     }
 
-    static void saveReturn(String returnType) throws Exception{
+    static void saveReturn(String returnType) throws JsonSyntaxException{
 
         String ret = returns.get(returns.size()-1);
         try {
             ret = compareVarTypes(ret, returnType);
             returns.set(returns.size()-1, ret);
         }catch(Exception e){
-            throw new Exception("Trying to return incompatible return types in same function");
+            throw new JsonSyntaxException("Trying to return incompatible return types in same function");
         }
     }
 

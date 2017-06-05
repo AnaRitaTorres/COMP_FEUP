@@ -4,7 +4,8 @@
     {
       "name": "User",
       "args":["String","int"],
-      "vars": {}
+      "vars": {},
+	"ret": "int"
     }
   ]
 }

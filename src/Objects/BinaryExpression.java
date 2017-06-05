@@ -34,13 +34,18 @@ public class BinaryExpression extends Expression {
                 ParserUt.getInstance().writeToBuffer(" " + operator + " ");
             }
 
-            if(right.getType().equals("BinaryExpression")){
-                ParserUt.getInstance().writeToBuffer("(");
-                right.print();
-                ParserUt.getInstance().writeToBuffer(")");
-            }
-            else {
-                right.print();
+            switch(right.getType()){
+                case "BinaryExpression":
+                    ParserUt.getInstance().writeToBuffer("(");
+                    right.print();
+                    ParserUt.getInstance().writeToBuffer(")");
+                    break;
+                case "CallExpression":
+                    right.print("");
+                    break;
+                default:
+                    right.print();
+                    break;
             }
         }
     }

@@ -11,7 +11,7 @@ public class ExpressionStatement extends Expression {
     public void print(){
         ParserUt.getInstance().printSpaces();
         if(ParserUt.getInstance().getInFunction() && ParserUt.getInstance().getPrintState()!= Parser.PrintState.GLOBAL_VARIABLES){
-            expression.print();
+            expression.print("");
         } else {
             ParserUt.getInstance().writeToBuffer("//Expression statement only valid inside functions.\n\n");
         }

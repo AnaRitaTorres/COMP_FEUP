@@ -17,14 +17,18 @@ public class CallExpression  extends Expression{
                 for(int i=0;i<arguments.size();i++){
                     arguments.get(i).print();
                 }
-                ParserUt.getInstance().writeToBuffer(");\n");
+                ParserUt.getInstance().writeToBuffer(")");
                 return;
             }
         }
         callee.print("");
         printArgs();
-        ParserUt.getInstance().writeToBuffer(";\n");
 
+    }
+
+    public void print(String type){
+        print();
+        ParserUt.getInstance().writeToBuffer(";\n");
 
     }
 

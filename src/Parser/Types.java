@@ -1,6 +1,7 @@
 package Parser;
 
 import Objects.Identifier;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,13 +20,13 @@ public class Types {
         }
     }
 
-    public boolean isCompatible(String functionName, ArrayList<String> params) throws Exception{
+    public boolean isCompatible(String functionName, ArrayList<String> params) throws JsonSyntaxException{
         for (int i = 0; i < functions.size(); i++) {
             if(functions.get(i).getName().equals(functionName)){
                 ArrayList<String> args = functions.get(i).getArgs();
                 ArrayList<String> modified = new ArrayList<>();
                 if(params.size() != args.size()){
-                    throw new Exception("Can't call functions with different types of parameters");
+                    throw new JsonSyntaxException("Can't call functions with different types of parameters");
                 }
                 for (int j = 0; j < params.size(); j++) {
                     modified.add(Parser.compareVarTypes(args.get(i), params.get(i)));
@@ -39,7 +40,7 @@ public class Types {
         return false;
     }
 
-    public void addFunction(String functionName, ArrayList<String> params) throws Exception{
+    public void addFunction(String functionName, ArrayList<String> params) throws JsonSyntaxException {
         if(!isCompatible(functionName, params)){
             FunctionsTypes type = new FunctionsTypes(functionName, params);
             functions.add(type);

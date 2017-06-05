@@ -13,8 +13,6 @@ public class Root {
 
     public void print(){
         Parser.variables.add(variables);
-        System.out.println("type: " + type);
-        System.out.println("body: " + body);
 
         for (int i = 0; i < body.size(); i++) {
             body.get(i).print();
