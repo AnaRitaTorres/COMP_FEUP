@@ -63,7 +63,24 @@ public class ParserUt {
 
     public void writeToBuffer(String line){
         try {
+            if(line.matches("(.)*\\.set\\(")) {
+
+                if(baos.toString().matches("[\\s\\S]*\\.set\\(.*, ")){
+                    String [] beforeAndAfterSet = baos.toString().split("set\\(");
+                    String [] beforeAndAfterComma = beforeAndAfterSet[ beforeAndAfterSet.length - 1 ].split(", ");
+
+                    String changedToGet = beforeAndAfterSet[0] + "get(" + beforeAndAfterComma[0] + ")";
+
+                    baos.reset();
+                    baos.write(changedToGet.getBytes());
+
+                }
+
+            }
+
             baos.write(line.getBytes());
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
