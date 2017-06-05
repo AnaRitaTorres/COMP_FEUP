@@ -25,7 +25,7 @@ public class VariableDeclaration extends Expression {
             }
         }else{
             ParserUt.getInstance().writeToBuffer("//The variable " + declarations.get(0).getId().getName() + " is not defined in the code or in the additional json.\n\n");
-
+            return;
         }
 
         for (int i = 0; i < declarations.size(); i++) {
