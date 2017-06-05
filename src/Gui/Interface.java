@@ -56,7 +56,7 @@ public class Interface extends JFrame implements ActionListener{
 
         javaTextArea = new JTextArea();
         javaTextArea.setDisabledTextColor(Color.BLACK);
-        javaTextArea.setEnabled(false);
+        javaTextArea.setEditable(false);
         javaNumber = new TextLineNumber(javaTextArea);
         javaScroll = new JScrollPane(javaTextArea);
         javaScroll.setRowHeaderView( javaNumber);
