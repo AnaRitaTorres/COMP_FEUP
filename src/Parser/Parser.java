@@ -213,14 +213,11 @@ public class Parser {
         for (int i = variables.size()-1; i >= 0; i--) {
             HashMap<String, String> scope = variables.get(i);
             if(scope.containsKey(var)){
-                if(scope.containsKey("function")) break;
                 String old = scope.get(var);
                 String newType = compareVarTypes(old, type);
                 scope.put(var, newType);
                 variables.set(i, scope);
                 return;
-            } else if(scope.containsKey("function")){
-                break;
             }
         }
     }
