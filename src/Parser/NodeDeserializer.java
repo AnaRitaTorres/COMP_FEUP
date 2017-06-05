@@ -44,7 +44,9 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
                         varType = inferType(value.getAsJsonObject());
                     }else if(leftType.toUpperCase().equals(MyClass.MEMBEREXPRESSION.name())){
                         name = getVarFromMember(id);
-                        varType = "ArrayList<" + inferType(value.getAsJsonObject()) + ">";
+                        String rawType = inferType(value.getAsJsonObject());
+//                        String arrayType = getTypeFromMember(id, rawType);
+                        varType = "ArrayList<" + getTypeFromMember(id, rawType) + ">";
                     } else{
                         name = "";
                         varType = "";
@@ -192,4 +194,13 @@ public class NodeDeserializer implements JsonDeserializer<BasicNode> {
         return (Class<? extends BasicNode>) MyClass.valueOf(nodeType.toUpperCase()).myClass; // we use an enum to map a node type to a specific class
     }
 
+    private String getTypeFromMember(JsonObject jsonObj, String raw){
+        String name;
+        JsonObject obj = jsonObj.getAsJsonObject("object");
+        if(obj.get("type").getAsString().equals("MemberExpression")){
+            name = "ArrayList<" + getTypeFromMember(obj, raw) + ">";
+        }else name = raw;
+
+        return name;
+    }
 }

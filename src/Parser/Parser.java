@@ -179,10 +179,9 @@ public class Parser {
     static void addVar(String var, String type) throws JsonSyntaxException{
         HashMap<String, String> last = variables.get(variables.size()-1);
         String oldType = last.get(var);
-        if(oldType != null)
-            if(oldType.equals(type)) return;
-            else throw new JsonSyntaxException("Cannot redefine variable type in java. Trying to change variable " + var);
-        last.put(var, type);
+        String newType = compareVarTypes(oldType, type);
+//            else throw new JsonSyntaxException("Cannot redefine variable type in java. Trying to change variable " + var);
+        last.put(var, newType);
         variables.set(variables.size()-1, last);
     }
     
@@ -227,15 +226,21 @@ public class Parser {
         } else return nextType;
     }
 
-    static String compareVarTypes(String type, String nextType) throws Exception{
-        if(nextType.isEmpty()) return type;
-        if(!type.isEmpty()) {
+    static String compareVarTypes(String type, String nextType) throws JsonSyntaxException{
+        if(nextType != null && nextType.isEmpty()) return type;
+        if(type != null && !type.isEmpty()) {
             if (type.equals(nextType)) return type;
             if ((type.equals("int") && nextType.equals("double"))
                     || type.equals("double") && nextType.equals("int")) {
                 return "double";
+            } else if(type.contains("ArrayList") && nextType.contains("ArrayList")){
+                int i0 = type.indexOf("<") + 1, i1 = type.lastIndexOf(">");
+                int n0 = nextType.indexOf("<") + 1, n1 = nextType.lastIndexOf(">");
+                String type1 = type.substring(i0, i1);
+                String type2 = nextType.substring(n0, n1);
+                return "ArrayList<" + compareVarTypes(type1, type2) + ">";
             } else {
-                throw new Exception("Trying to save incompatible return types in same function");
+                throw new JsonSyntaxException("Trying to save incompatible types in same variable");
             }
         }else {
             return nextType;

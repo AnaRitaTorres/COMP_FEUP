@@ -4,15 +4,13 @@ import Nodes.Expression;
 import Parser.Parser;
 import Parser.ParserUt;
 
-import java.lang.reflect.Type;
 
 public class DoWhileStatement extends Expression{
 
     private Expression test;
     private Expression body;
 
-    public DoWhileStatement(){}
-    public DoWhileStatement createInstance(Type type){return new DoWhileStatement();}
+    private DoWhileStatement(){}
 
     public void print() {
         ParserUt.getInstance().printSpaces();

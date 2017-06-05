@@ -2,10 +2,6 @@ package Objects;
 import Nodes.Expression;
 import Parser.ParserUt;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class BinaryExpression extends Expression {
 
     private String operator;
@@ -13,7 +9,6 @@ public class BinaryExpression extends Expression {
     private Expression right;
 
     public BinaryExpression(){}
-    public BinaryExpression createInstance(Type type){return new BinaryExpression();}
 
     public void print() {
         String type="";

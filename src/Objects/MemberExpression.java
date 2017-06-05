@@ -1,7 +1,6 @@
 package Objects;
 
 import Nodes.Expression;
-import Parser.Parser;
 import Parser.ParserUt;
 
 public class MemberExpression extends Expression{
@@ -15,10 +14,6 @@ public class MemberExpression extends Expression{
             ParserUt.getInstance().writeToBuffer(".");
             property.print();
         }
-//        object.print();
-//        ParserUt.getInstance().writeToBuffer(".add(");
-//        property.print();
-//        ParserUt.getInstance().writeToBuffer(", ");
     }
 
     public void print(String type){
@@ -33,7 +28,7 @@ public class MemberExpression extends Expression{
                 property.print();
                 ParserUt.getInstance().writeToBuffer(", ");
                 if(type.matches(".=")){
-                    object.print();
+                    print();
                     ParserUt.getInstance().writeToBuffer(".get(");
                     property.print();
                     ParserUt.getInstance().writeToBuffer(")" + type.charAt(0));
