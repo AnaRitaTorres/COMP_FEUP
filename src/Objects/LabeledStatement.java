@@ -18,9 +18,4 @@ public class LabeledStatement extends Expression {
             body.print();
     }
 
-
-
-
-
-
 }

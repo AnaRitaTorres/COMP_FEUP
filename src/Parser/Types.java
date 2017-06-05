@@ -12,6 +12,7 @@ public class Types {
 
     Types(){
         functions = new ArrayList<>();
+        vars = new HashMap<>();
     }
 
     public void print(){

@@ -51,7 +51,7 @@ public class Parser {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }
+        } else types = new Types();
 
 
         String javaCode;
