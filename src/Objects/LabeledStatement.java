@@ -13,8 +13,8 @@ public class LabeledStatement extends Expression {
     public void print(){
         ParserUt.getInstance().printSpaces();
         label.print();
-        ParserUt.getInstance().writeToBuffer(":");
-        if(body.getClass().equals(ForStatement.class))
+        ParserUt.getInstance().writeToBuffer(":\n");
+        if(body != null)
             body.print();
     }
 
